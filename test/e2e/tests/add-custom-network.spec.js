@@ -85,7 +85,6 @@ describe('Custom network', function () {
 
         await driver.clickElement({ tag: 'button', text: 'Close' });
         await driver.clickElement({ tag: 'button', text: 'Approve' });
-
         await driver.clickElement({
           tag: 'h6',
           text: 'Switch to Arbitrum One',

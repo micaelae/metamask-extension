@@ -177,6 +177,8 @@ export default function ConfirmationPage({
   const setInputState = (key, value) => {
     setInputStates((currentState) => ({ ...currentState, [key]: value }));
   };
+  const [loading, setLoading] = useState(false);
+  const [submitAlerts, setSubmitAlerts] = useState([]);
 
   ///: BEGIN:ONLY_INCLUDE_IN(flask)
   const snap = useSelector((state) =>
@@ -258,14 +260,25 @@ export default function ConfirmationPage({
     return INPUT_STATE_CONFIRMATIONS.includes(type);
   };
 
-  const handleSubmit = () =>
-    templateState[pendingConfirmation.id]?.useWarningModal
+  const handleSubmit = async () => {
+    setLoading(true);
+    const submitResult = await (templateState[pendingConfirmation.id]
+      ?.useWarningModal
       ? setShowWarningModal(true)
-      : templatedValues.onSubmit(
+      : await templatedValues.onSubmit(
           hasInputState(pendingConfirmation.type)
             ? inputStates[MESSAGE_TYPE.SNAP_DIALOG_PROMPT]
             : null,
-        );
+        ));
+
+    if (submitResult?.success) {
+      setLoading(false);
+    }
+
+    if (submitResult?.error) {
+      setSubmitAlerts(submitResult.error);
+    }
+  };
 
   return (
     <div className="confirmation-page">
@@ -362,6 +375,18 @@ export default function ConfirmationPage({
         onCancel={templatedValues.onCancel}
         submitText={templatedValues.submitText}
         cancelText={templatedValues.cancelText}
+        loadingText={templatedValues.loadingText}
+        loading={loading}
+        submitAlerts={submitAlerts.map((alert, idx) => (
+          <Callout
+            key={alert.id}
+            severity={alert.severity}
+            dismiss={() => dismissAlert(alert.id)}
+            isFirst={idx === 0}
+          >
+            <MetaMaskTemplateRenderer sections={alert.content} />
+          </Callout>
+        ))}
       />
     </div>
   );
