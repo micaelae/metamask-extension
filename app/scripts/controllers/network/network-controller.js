@@ -21,6 +21,7 @@ import {
   TEST_NETWORK_TICKER_MAP,
   CHAIN_IDS,
   NETWORK_TYPES,
+  NetworkStatus,
 } from '../../../../shared/constants/network';
 import {
   isPrefixedFormattedHexString,
@@ -70,7 +71,8 @@ export const NETWORK_EVENTS = {
   NETWORK_WILL_CHANGE: 'networkWillChange',
   // Fired when Infura returns an error indicating no support
   INFURA_IS_BLOCKED: 'infuraIsBlocked',
-  // Fired when not using an Infura network or when Infura returns no error, indicating support
+  // Fired when not using an Infura network or when Infura returns no error,
+  // indicating support
   INFURA_IS_UNBLOCKED: 'infuraIsUnblocked',
 };
 
@@ -94,12 +96,12 @@ export default class NetworkController extends EventEmitter {
     this.previousProviderStore = new ObservableStore(
       this.providerStore.getState(),
     );
-    this.networkStore = new ObservableStore('loading');
-    // We need to keep track of a few details about the current network
-    // Ideally we'd merge this.networkStore with this new store, but doing so
-    // will require a decent sized refactor of how we're accessing network
-    // state. Currently this is only used for detecting EIP 1559 support but
-    // can be extended to track other network details.
+    this.networkStatusStore = new ObservableStore(NetworkStatus.loading);
+    // We need to keep track of a few details about the current network.
+    // Ideally we'd merge this.networkStatusStore with this new store, but doing
+    // so will require a decent sized refactor of how we're accessing network
+    // state. Currently this is only used for detecting EIP-1559 support but can
+    // be extended to track other network details.
     this.networkDetails = new ObservableStore(
       state.networkDetails || {
         ...defaultNetworkDetailsState,
@@ -108,7 +110,7 @@ export default class NetworkController extends EventEmitter {
     this.store = new ComposedStore({
       provider: this.providerStore,
       previousProviderStore: this.previousProviderStore,
-      network: this.networkStore,
+      networkStatus: this.networkStatusStore,
       networkDetails: this.networkDetails,
     });
 
@@ -136,7 +138,7 @@ export default class NetworkController extends EventEmitter {
    * In-progress requests will not be aborted.
    */
   async destroy() {
-    await this._blockTracker?.destroy();
+    await this._blockTrackerProxy?.destroy();
   }
 
   async initializeProvider() {
@@ -186,13 +188,11 @@ export default class NetworkController extends EventEmitter {
       log.warn(
         'NetworkController - lookupNetwork aborted due to missing chainId',
       );
-      this._setNetworkState('loading');
+      this._setNetworkStatus(NetworkStatus.loading);
       this._clearNetworkDetails();
       return;
     }
 
-    // Ping the RPC endpoint so we can confirm that it works
-    const initialNetwork = this.networkStore.getState();
     const { type } = this.providerStore.getState();
     const isInfura = INFURA_PROVIDER_TYPES.includes(type);
 
@@ -202,26 +202,9 @@ export default class NetworkController extends EventEmitter {
       this.emit(NETWORK_EVENTS.INFURA_IS_UNBLOCKED);
     }
 
-    let networkVersion;
-    let networkVersionError;
-    try {
-      networkVersion = await this._getNetworkId();
-    } catch (error) {
-      networkVersionError = error;
-    }
-    if (initialNetwork !== this.networkStore.getState()) {
-      return;
-    }
+    this._setNetworkStatus(NetworkStatus.active);
 
-    if (networkVersionError) {
-      this._setNetworkState('loading');
-      // keep network details in sync with network state
-      this._clearNetworkDetails();
-    } else {
-      this._setNetworkState(networkVersion);
-      // look up EIP-1559 support
-      await this.getEIP1559Compatibility();
-    }
+    await this.getEIP1559Compatibility();
   }
 
   setRpcTarget(rpcUrl, chainId, ticker = 'ETH', nickname = '', rpcPrefs) {
@@ -278,24 +261,6 @@ export default class NetworkController extends EventEmitter {
   //
 
   /**
-   * Get the network ID for the current selected network
-   *
-   * @returns {string} The network ID for the current network.
-   */
-  async _getNetworkId() {
-    const ethQuery = new EthQuery(this._provider);
-    return await new Promise((resolve, reject) => {
-      ethQuery.sendAsync({ method: 'net_version' }, (error, result) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result);
-        }
-      });
-    });
-  }
-
-  /**
    * Method to return the latest block for the current network
    *
    * @returns {object} Block header
@@ -316,8 +281,8 @@ export default class NetworkController extends EventEmitter {
     });
   }
 
-  _setNetworkState(network) {
-    this.networkStore.putState(network);
+  _setNetworkStatus(networkStatus) {
+    this.networkStatusStore.putState(networkStatus);
   }
 
   /**
@@ -395,13 +360,13 @@ export default class NetworkController extends EventEmitter {
     // Indicate to subscribers that network is about to change
     this.emit(NETWORK_EVENTS.NETWORK_WILL_CHANGE);
     // Set loading state
-    this._setNetworkState('loading');
+    this._setNetworkStatus(NetworkStatus.loading);
     // Reset network details
     this._clearNetworkDetails();
     // Configure the provider appropriately
     this._configureProvider(opts);
     // Notify subscribers that network has changed
-    this.emit(NETWORK_EVENTS.NETWORK_DID_CHANGE, opts.type);
+    this.emit(NETWORK_EVENTS.NETWORK_DID_CHANGE);
   }
 
   _configureProvider({ type, rpcUrl, chainId }) {

@@ -343,7 +343,7 @@ describe('Confirm Transaction Duck', () => {
         metamask: {
           conversionRate: 468.58,
           currentCurrency: 'usd',
-          network: '5',
+          networkStatus: 'active',
           provider: {
             chainId: '0x5',
           },

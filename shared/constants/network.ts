@@ -1088,3 +1088,13 @@ export const FEATURED_RPCS: RPCDefinition[] = [
     },
   },
 ];
+
+/**
+ * Roughly represents whether we have enough information to make requests to a
+ * network and whether the currently selected network is capable of receiving
+ * requests.
+ */
+export enum NetworkStatus {
+  loading = 'loading',
+  active = 'active',
+}

@@ -49,7 +49,6 @@ export default class IncomingTransactionsController {
   constructor(opts = {}) {
     const {
       blockTracker,
-      onNetworkDidChange,
       getCurrentChainId,
       preferencesController,
       onboardingController,
@@ -128,7 +127,7 @@ export default class IncomingTransactionsController {
       }, this.onboardingController.store.getState()),
     );
 
-    onNetworkDidChange(async () => {
+    this.preferencesController.store.subscribe(async () => {
       const address = this.preferencesController.getSelectedAddress();
       await this._update(address);
     });

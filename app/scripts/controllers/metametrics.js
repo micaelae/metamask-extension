@@ -90,8 +90,6 @@ export default class MetaMetricsController {
    *  events that conform to the new MetaMetrics tracking plan.
    * @param {object} options.preferencesStore - The preferences controller store, used
    *  to access and subscribe to preferences that will be attached to events
-   * @param {Function} options.onNetworkDidChange - Used to attach a listener to the
-   *  networkDidChange event emitted by the networkController
    * @param {Function} options.getCurrentChainId - Gets the current chain id from the
    *  network controller
    * @param {string} options.version - The version of the extension
@@ -103,7 +101,6 @@ export default class MetaMetricsController {
   constructor({
     segment,
     preferencesStore,
-    onNetworkDidChange,
     getCurrentChainId,
     version,
     environment,
@@ -119,7 +116,7 @@ export default class MetaMetricsController {
       }
     };
     const prefState = preferencesStore.getState();
-    this.chainId = getCurrentChainId();
+    this._getCurrentChainId = getCurrentChainId;
     this.locale = prefState.currentLocale.replace('_', '-');
     this.version =
       environment === 'production' ? version : `${version}-${environment}`;
@@ -147,9 +144,6 @@ export default class MetaMetricsController {
       this.locale = currentLocale.replace('_', '-');
     });
 
-    onNetworkDidChange(() => {
-      this.chainId = getCurrentChainId();
-    });
     this.segment = segment;
 
     // Track abandoned fragments that weren't properly cleaned up.
@@ -468,7 +462,7 @@ export default class MetaMetricsController {
         properties: {
           params,
           locale: this.locale,
-          chain_id: this.chainId,
+          chain_id: this._getCurrentChainId(),
           environment_type: environmentType,
         },
         context: this._buildContext(referrer, page),
@@ -667,7 +661,7 @@ export default class MetaMetricsController {
         currency,
         category,
         locale: this.locale,
-        chain_id: properties?.chain_id ?? this.chainId,
+        chain_id: properties?.chain_id ?? this._getCurrentChainId(),
         environment_type: environmentType,
       },
       context: this._buildContext(referrer, page),
@@ -694,15 +688,12 @@ export default class MetaMetricsController {
         (rpc) => rpc.chainId,
       ),
       [TRAITS.NETWORKS_WITHOUT_TICKER]:
-        metamaskState.frequentRpcListDetail.reduce(
-          (networkList, currentNetwork) => {
-            if (!currentNetwork.ticker) {
-              networkList.push(currentNetwork.chainId);
-            }
-            return networkList;
-          },
-          [],
-        ),
+        metamaskState.frequentRpcListDetail.reduce((networkList, network) => {
+          if (!network.ticker) {
+            networkList.push(network.chainId);
+          }
+          return networkList;
+        }, []),
       [TRAITS.NFT_AUTODETECTION_ENABLED]: metamaskState.useNftDetection,
       [TRAITS.NUMBER_OF_ACCOUNTS]: Object.values(metamaskState.identities)
         .length,

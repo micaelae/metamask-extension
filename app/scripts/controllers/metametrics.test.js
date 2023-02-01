@@ -70,19 +70,16 @@ function getMockNetworkController() {
       type: NETWORK_TYPES.GOERLI,
       chainId: FAKE_CHAIN_ID,
     },
-    network: 'loading',
+    networkStatus: 'loading',
   };
-  const on = sinon.stub().withArgs(NETWORK_EVENTS.NETWORK_DID_CHANGE);
   const updateState = (newState) => {
     state = { ...state, ...newState };
-    on.getCall(0).args[1]();
   };
   return {
     store: {
       getState: () => state,
       updateState,
     },
-    on,
   };
 }
 
@@ -135,10 +132,6 @@ function getMetaMetricsController({
     segment: segmentInstance || segment,
     getCurrentChainId: () =>
       networkController.store.getState().provider.chainId,
-    onNetworkDidChange: networkController.on.bind(
-      networkController,
-      NETWORK_EVENTS.NETWORK_DID_CHANGE,
-    ),
     preferencesStore,
     version: '0.0.1',
     environment: 'test',
