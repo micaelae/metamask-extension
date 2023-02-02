@@ -334,7 +334,7 @@ export const SETTINGS_CONSTANTS = [
     descriptionMessage: (t) => t('enableOpenSeaAPIDescription'),
     route: `${EXPERIMENTAL_ROUTE}#opensea-api`,
     icon: 'fa fa-flask',
-    featureFlag: 'NFTS_V1',
+    featureFlag: process.env.NFTS_V1,
   },
   {
     tabMessage: (t) => t('experimental'),
@@ -364,5 +364,6 @@ export const SETTINGS_CONSTANTS = [
     descriptionMessage: (t) => t('transactionSecurityCheckDescription'),
     route: `${EXPERIMENTAL_ROUTE}#transaction-security-check`,
     icon: 'fa fa-flask',
+    featureFlag: process.env.TRANSACTION_SECURITY_PROVIDER,
   },
 ];
