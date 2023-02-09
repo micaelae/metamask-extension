@@ -25,12 +25,29 @@ import createSubscriptionManager from 'eth-json-rpc-filters/subscriptionManager'
 import { PollingBlockTracker } from 'eth-block-tracker';
 import { SECOND } from '../../../../shared/constants/time';
 import { BUILT_IN_NETWORKS } from '../../../../shared/constants/network';
-// import type { InfuraJsonRpcSupportedNetwork } from '@metamask/eth-json-rpc-infura/dist/types';
+import type { InfuraJsonRpcSupportedNetwork } from '@metamask/eth-json-rpc-infura/dist/types';
+
+type RpcPayload<P> = {
+  id: unknown;
+  jsonrpc: unknown;
+  method: unknown;
+  params?: P;
+};
+
+type RpcResponse<Y extends RpcPayload<any>, V> = {
+  id: Y['id'];
+  jsonrpc: Y['jsonrpc'];
+  result: V | undefined;
+  error?: {
+    message: unknown;
+    code: number;
+  };
+};
 
 function createNetworkAndChainIdMiddleware({
   network,
 }: {
-  network: InfuraSupportedNetwork;
+  network: InfuraJsonRpcSupportedNetwork;
 }) {
   if (!BUILT_IN_NETWORKS[network]) {
     throw new Error(`createInfuraClient - unknown network "${network}"`);
@@ -75,7 +92,7 @@ function createInfuraNetworkMiddleware({
   rpcApiMiddleware,
 }: {
   blockTracker: PollingBlockTracker;
-  network: 'mainnet' | 'goerli' | 'sepolia' | 'localhost';
+  network: InfuraJsonRpcSupportedNetwork;
   // network: InfuraJsonRpcSupportedNetwork,
   rpcProvider: SafeEventEmitterProvider;
   rpcApiMiddleware: any;
@@ -105,10 +122,10 @@ type CustomNetworkConfiguration = {
   type: NetworkClientType.CUSTOM;
 };
 
-type InfuraSupportedNetwork = 'goerli' | 'mainnet' | 'sepolia' | 'localhost';
+// type InfuraSupportedNetwork = 'goerli' | 'mainnet' | 'sepolia' | 'localhost';
 
 type InfuraNetworkConfiguration = {
-  network: InfuraSupportedNetwork;
+  network: InfuraJsonRpcSupportedNetwork;
   infuraProjectId: string;
   type: NetworkClientType.INFURA;
 };
@@ -183,8 +200,13 @@ export function createNetworkClient(
   return { provider, blockTracker };
 }
 
-function createChainIdMiddleware(chainId) {
-  return (req, res, next, end) => {
+function createChainIdMiddleware(chainId: string) {
+  return (
+    req: RpcPayload<any>,
+    res: RpcResponse<RpcPayload<any>, any>,
+    next: () => Promise<void>,
+    end: () => Promise<void>,
+  ) => {
     if (req.method === 'eth_chainId') {
       res.result = chainId;
       return end();
