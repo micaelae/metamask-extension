@@ -117,16 +117,12 @@ export function testsForProviderType(providerType) {
         { name: 'eth_coinbase', numberOfParameters: 0 },
         { name: 'eth_createAccessList', numberOfParameters: 2 },
         { name: 'eth_feeHistory', numberOfParameters: 3 },
-        { name: 'eth_getFilterChanges', numberOfParameters: 1 },
         { name: 'eth_getLogs', numberOfParameters: 1 },
         { name: 'eth_getProof', numberOfParameters: 3 },
         { name: 'eth_getWork', numberOfParameters: 0 },
         { name: 'eth_hashrate', numberOfParameters: 0 },
         { name: 'eth_maxPriorityFeePerGas', numberOfParameters: 0 },
         { name: 'eth_mining', numberOfParameters: 0 },
-        { name: 'eth_newBlockFilter', numberOfParameters: 0 },
-        { name: 'eth_newFilter', numberOfParameters: 1 },
-        { name: 'eth_newPendingTransactionFilter', numberOfParameters: 0 },
         { name: 'eth_sendRawTransaction', numberOfParameters: 1 },
         { name: 'eth_signTransaction', numberOfParameters: 1 },
         { name: 'eth_sendTransaction', numberOfParameters: 1 },
@@ -134,12 +130,17 @@ export function testsForProviderType(providerType) {
         { name: 'eth_submitHashRate', numberOfParameters: 2 },
         { name: 'eth_submitWork', numberOfParameters: 3 },
         { name: 'eth_syncing', numberOfParameters: 0 },
-        { name: 'eth_uninstallFilter', numberOfParameters: 1 },
         { name: 'debug_getRawHeader', numberOfParameters: 1 },
         { name: 'debug_getRawBlock', numberOfParameters: 1 },
         { name: 'debug_getRawTransaction', numberOfParameters: 1 },
         { name: 'debug_getRawReceipts', numberOfParameters: 1 },
         { name: 'debug_getBadBlocks', numberOfParameters: 0 },
+        // TODO: Methods to add back when we add testing for filter middleware
+        // { name: 'eth_getFilterChanges', numberOfParameters: 1 },
+        // { name: 'eth_newBlockFilter', numberOfParameters: 0 },
+        // { name: 'eth_newFilter', numberOfParameters: 1 },
+        // { name: 'eth_newPendingTransactionFilter', numberOfParameters: 0 },
+        // { name: 'eth_uninstallFilter', numberOfParameters: 1 },
       ];
       notHandledByMiddleware.forEach(({ name, numberOfParameters }) => {
         describe(`method name: ${name}`, () => {
@@ -217,7 +218,8 @@ export function testsForProviderType(providerType) {
           name: 'eth_getBlockTransactionCountByHash',
           numberOfParameters: 1,
         },
-        { name: 'eth_getFilterLogs', numberOfParameters: 1 },
+        // TODO: Method to add back when we add testing for filter middleware
+        // { name: 'eth_getFilterLogs', numberOfParameters: 1 },
         {
           name: 'eth_getTransactionByBlockHashAndIndex',
           numberOfParameters: 2,
@@ -337,8 +339,9 @@ export function testsForProviderType(providerType) {
     describe('methods not handled by middleware', () => {
       const notHandledByMiddleware = [
         { name: 'custom_rpc_method', numberOfParameters: 1 },
-        { name: 'eth_subscribe', numberOfParameters: 1 },
-        { name: 'eth_unsubscribe', numberOfParameters: 1 },
+        // TODO: Methods to add back when we add testing for subscribe middleware
+        // { name: 'eth_subscribe', numberOfParameters: 1 },
+        // { name: 'eth_unsubscribe', numberOfParameters: 1 },
         { name: 'net_listening', numberOfParameters: 0 },
         { name: 'net_peerCount', numberOfParameters: 0 },
         { name: 'parity_nextNonce', numberOfParameters: 1 },

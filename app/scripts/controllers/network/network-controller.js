@@ -1,19 +1,12 @@
 import { strict as assert } from 'assert';
 import EventEmitter from 'events';
 import { ComposedStore, ObservableStore } from '@metamask/obs-store';
-import { JsonRpcEngine } from 'json-rpc-engine';
-import {
-  providerFromEngine,
-  providerFromMiddleware,
-} from '@metamask/eth-json-rpc-middleware';
 import log from 'loglevel';
 import {
   createSwappableProxy,
   createEventEmitterProxy,
 } from 'swappable-obj-proxy';
 import EthQuery from 'eth-query';
-import createFilterMiddleware from 'eth-json-rpc-filters';
-import createSubscriptionManager from 'eth-json-rpc-filters/subscriptionManager';
 import {
   INFURA_PROVIDER_TYPES,
   BUILT_IN_NETWORKS,
@@ -27,8 +20,7 @@ import {
   isSafeChainId,
 } from '../../../../shared/modules/network.utils';
 import getFetchWithTimeout from '../../../../shared/modules/fetch-with-timeout';
-import createInfuraClient from './createInfuraClient';
-import createJsonRpcClient from './createJsonRpcClient';
+import { createNetworkClient } from './create-network-client';
 
 const env = process.env.METAMASK_ENV;
 const fetchWithTimeout = getFetchWithTimeout();
@@ -408,7 +400,10 @@ export default class NetworkController extends EventEmitter {
     // infura type-based endpoints
     const isInfura = INFURA_PROVIDER_TYPES.includes(type);
     if (isInfura) {
-      this._configureInfuraProvider(type, this._infuraProjectId);
+      this._configureInfuraProvider({
+        type,
+        infuraProjectId: this._infuraProjectId,
+      });
       // url-based rpc endpoints
     } else if (type === NETWORK_TYPES.RPC) {
       this._configureStandardProvider(rpcUrl, chainId);
@@ -419,42 +414,23 @@ export default class NetworkController extends EventEmitter {
     }
   }
 
-  _configureInfuraProvider(type, projectId) {
+  _configureInfuraProvider({ type, infuraProjectId }) {
     log.info('NetworkController - configureInfuraProvider', type);
-    const networkClient = createInfuraClient({
+    const { provider, blockTracker } = createNetworkClient({
       network: type,
-      projectId,
+      infuraProjectId,
+      type: 'infura',
     });
-    this._setNetworkClient(networkClient);
+    this._setProviderAndBlockTracker({ provider, blockTracker });
   }
 
   _configureStandardProvider(rpcUrl, chainId) {
     log.info('NetworkController - configureStandardProvider', rpcUrl);
-    const networkClient = createJsonRpcClient({ rpcUrl, chainId });
-    this._setNetworkClient(networkClient);
-  }
-
-  _setNetworkClient({ networkMiddleware, blockTracker }) {
-    const networkProvider = providerFromMiddleware(networkMiddleware);
-    const filterMiddleware = createFilterMiddleware({
-      provider: networkProvider,
-      blockTracker,
+    const { provider, blockTracker } = createNetworkClient({
+      chainId,
+      rpcUrl,
+      type: 'custom',
     });
-    const subscriptionManager = createSubscriptionManager({
-      provider: networkProvider,
-      blockTracker,
-    });
-
-    const engine = new JsonRpcEngine();
-    subscriptionManager.events.on('notification', (message) =>
-      engine.emit('notification', message),
-    );
-    engine.push(filterMiddleware);
-    engine.push(subscriptionManager.middleware);
-    engine.push(networkMiddleware);
-
-    const provider = providerFromEngine(engine);
-
     this._setProviderAndBlockTracker({ provider, blockTracker });
   }
 
