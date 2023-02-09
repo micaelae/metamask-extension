@@ -226,7 +226,7 @@ export default class PersonalMessageManager extends EventEmitter {
         action: 'Sign Request Approve',
         type: msg.type,
         ui_customizations:
-          msg.securityProviderResponse.flagAsDangerous === 1
+          msg.securityProviderResponse?.flagAsDangerous === 1
             ? ['flagged_as_malicious']
             : [],
       },
@@ -286,7 +286,7 @@ export default class PersonalMessageManager extends EventEmitter {
           action: 'Sign Request Reject',
           type: msg.type,
           ui_customizations:
-            msg.securityProviderResponse.flagAsDangerous === 1
+            msg.securityProviderResponse?.flagAsDangerous === 1
               ? ['flagged_as_malicious']
               : [],
         },
