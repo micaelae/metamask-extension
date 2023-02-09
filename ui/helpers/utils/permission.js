@@ -1,6 +1,6 @@
 import deepFreeze from 'deep-freeze-strict';
-///: BEGIN:ONLY_INCLUDE_IN(flask)
 import React from 'react';
+///: BEGIN:ONLY_INCLUDE_IN(flask)
 import { getRpcCaveatOrigins } from '@metamask/snaps-controllers/dist/snaps/endowments/rpc';
 import { SnapCaveatType } from '@metamask/snaps-utils';
 import { isNonEmptyArray } from '@metamask/controller-utils';
