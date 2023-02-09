@@ -13,10 +13,10 @@ import {
   PermissionNamespaces,
   ///: END:ONLY_INCLUDE_IN
 } from '../../../shared/constants/permissions';
+import Tooltip from '../../components/ui/tooltip';
+import { Icon, ICON_NAMES } from '../../components/component-library';
 ///: BEGIN:ONLY_INCLUDE_IN(flask)
 import { SNAPS_METADATA } from '../../../shared/constants/snaps';
-import { Icon, ICON_NAMES } from '../../components/component-library';
-import Tooltip from '../../components/ui/tooltip';
 import { coinTypeToProtocolName, getSnapDerivationPathName } from './util';
 ///: END:ONLY_INCLUDE_IN
 
