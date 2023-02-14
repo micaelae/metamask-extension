@@ -240,6 +240,7 @@ export const TRAITS = {
  *  enabled? (deprecated)
  * @property {string} [theme] - which theme the user has selected
  * @property {boolean} [token_detection_enabled] - does the user have token detection is enabled?
+ * @property {Array<string>} [security_provider] - whether security provider feature toggle is on or off
  */
 
 // Mixpanel converts the zero address value to a truly anonymous event, which
