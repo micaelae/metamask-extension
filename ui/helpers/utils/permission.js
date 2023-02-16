@@ -69,7 +69,15 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
             </span>,
             path.join('/'),
           ]),
-          description: t('permission_viewNamedBip32PublicKeysDescription'),
+          description: t('permission_viewBip32PublicKeysDescription', [
+            <span
+              className="tooltip-label-item"
+              key={`description-${path.join('/')}`}
+            >
+              {friendlyName}
+            </span>,
+            path.join('/'),
+          ]),
         };
       }
 
@@ -81,7 +89,15 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
           </span>,
           curve,
         ]),
-        description: t('permission_viewNamedBip32PublicKeysDescription'),
+        description: t('permission_viewBip32PublicKeysDescription', [
+          <span
+            className="tooltip-label-item"
+            key={`description-${path.join('/')}`}
+          >
+            {path.join('/')}
+          </span>,
+          path.join('/'),
+        ]),
       };
     }),
   [RestrictedMethods.snap_getBip32Entropy]: (t, _, permissionValue) =>
@@ -102,7 +118,15 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
             </span>,
             path.join('/'),
           ]),
-          description: t('permission_manageNamedBip32KeysDescription'),
+          description: t('permission_manageBip32KeysDescription', [
+            <span
+              className="tooltip-label-item"
+              key={`description-${path.join('/')}`}
+            >
+              {friendlyName}
+            </span>,
+            curve,
+          ]),
         };
       }
 
@@ -114,7 +138,15 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
           </span>,
           curve,
         ]),
-        description: t('permission_manageBip32KeysDescription'),
+        description: t('permission_manageBip32KeysDescription', [
+          <span
+            className="tooltip-label-item"
+            key={`description-${path.join('/')}`}
+          >
+            {path.join('/')}
+          </span>,
+          curve,
+        ]),
       };
     }),
   [RestrictedMethods.snap_getBip44Entropy]: (t, _, permissionValue) =>
@@ -125,7 +157,15 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
             `${coinType} (Unrecognized protocol)`}
         </span>,
       ]),
-      description: t('permission_manageBip44KeysDescription'),
+      description: t('permission_manageBip44KeysDescription', [
+        <span
+          className="tooltip-label-item"
+          key={`description-coin-type-${coinType}`}
+        >
+          {coinTypeToProtocolName(coinType) ||
+            `${coinType} (Unrecognized protocol)`}
+        </span>,
+      ]),
       leftIcon: 'fas fa-door-open',
       rightIcon: 'fa fa-exclamation-triangle',
       weight: 1,
@@ -161,14 +201,14 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
             {friendlyName}
           </span>,
         ]),
-        description: t('permission_accessSnapDescription'),
+        description: t('permission_accessSnapDescription', [friendlyName]),
       };
     }
 
     return {
       ...baseDescription,
       label: t('permission_accessSnap', [snapId]),
-      description: t('permission_accessSnapDescription'),
+      description: t('permission_accessSnapDescription', [snapId]),
     };
   },
   [EndowmentPermissions['endowment:network-access']]: (t) => ({
@@ -247,7 +287,7 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
       results.push({
         ...baseDescription,
         label: t('permission_rpc', [t('otherSnaps')]),
-        description: t('permission_rpcDescription'),
+        description: t('permission_rpcDescription', [t('otherSnaps')]),
       });
     }
 
@@ -255,7 +295,7 @@ const PERMISSION_DESCRIPTIONS = deepFreeze({
       results.push({
         ...baseDescription,
         label: t('permission_rpc', [t('websites')]),
-        description: t('permission_rpcDescription'),
+        description: t('permission_rpcDescription', [t('websites')]),
       });
     }
 
@@ -360,7 +400,8 @@ export function getRightIcon({ rightIcon, description, weight }) {
           'permission__tooltip-icon',
           weight === 1 && 'permission__tooltip-icon__warning',
         )}
-        html={description}
+        html={<div>{description}</div>}
+        position="bottom"
       >
         <i className={rightIcon} />
       </Tooltip>
