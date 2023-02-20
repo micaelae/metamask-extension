@@ -110,6 +110,7 @@ import { STATIC_MAINNET_TOKEN_LIST } from '../../shared/constants/tokens';
 import { getTokenValueParam } from '../../shared/lib/metamask-controller-utils';
 import { isManifestV3 } from '../../shared/modules/mv3.utils';
 import { hexToDecimal } from '../../shared/modules/conversion.utils';
+import { ACTION_QUEUE_METRICS_E2E_TEST } from '../../shared/constants/test-flags';
 import {
   onMessageReceived,
   checkForMultipleVersionsRunning,
@@ -2808,9 +2809,26 @@ export default class MetamaskController extends EventEmitter {
    * @returns {} keyState
    */
   async addNewAccount(accountCount) {
-    const [primaryKeyring] = this.keyringController.getKeyringsByType(
+    const isActionMetricsQueueE2ETest =
+      this.appStateController.store.getState()[ACTION_QUEUE_METRICS_E2E_TEST];
+
+    if (process.env.IN_TEST && isActionMetricsQueueE2ETest) {
+      await new Promise((resolve) => setTimeout(resolve, 5_000));
+    }
+
+    console.log('isActionMetricsQueueE2ETest: ', isActionMetricsQueueE2ETest);
+
+    console.log(
+      'HardwareKeyringTypes.hdKeyTree: ',
       HardwareKeyringTypes.hdKeyTree,
     );
+
+    const response = this.keyringController.getKeyringsByType(
+      HardwareKeyringTypes.hdKeyTree,
+    );
+    console.log({ response });
+
+    const [primaryKeyring] = response;
     if (!primaryKeyring) {
       throw new Error('MetamaskController - No HD Key Tree found');
     }

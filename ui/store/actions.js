@@ -353,11 +353,16 @@ export function addNewAccount() {
 
     let newIdentities;
     try {
+      console.log('addNewAccount');
+      console.log({ oldIdentities });
       const { identities } = await submitRequestToBackground('addNewAccount', [
         Object.keys(oldIdentities).length,
       ]);
       newIdentities = identities;
+      console.log({ newIdentities });
     } catch (error) {
+      console.log('addNewAccount');
+      console.log({ error });
       dispatch(displayWarning(error.message));
       throw error;
     } finally {

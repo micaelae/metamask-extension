@@ -33,9 +33,12 @@ export default class NewAccountCreateForm extends Component {
               account_type: EVENT.ACCOUNT_TYPES.DEFAULT,
             },
           });
+          console.log('before push');
           history.push(mostRecentOverviewPage);
+          console.log('after push');
         })
         .catch((e) => {
+          console.log('catch', { e });
           this.context.trackEvent({
             category: EVENT.CATEGORIES.ACCOUNTS,
             event: EVENT_NAMES.ACCOUNT_ADD_FAILED,

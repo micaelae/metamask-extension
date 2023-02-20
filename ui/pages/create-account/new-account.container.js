@@ -21,8 +21,12 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     createAccount: (newAccountName) => {
+      console.log('new-account.container.js');
+      console.log({ newAccountName });
       return dispatch(actions.addNewAccount()).then((newAccountAddress) => {
+        console.log(1);
         if (newAccountName) {
+          console.log(2);
           dispatch(actions.setAccountLabel(newAccountAddress, newAccountName));
         }
       });
