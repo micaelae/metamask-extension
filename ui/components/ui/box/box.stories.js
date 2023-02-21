@@ -649,7 +649,8 @@ export const ResponsiveProps = () => {
         marginBottom={[0]}
         padding={[2, 4]}
         gap={[2, 4]}
-        display={[DISPLAY.FLEX, null, null, DISPLAY.NONE]}
+        display={[DISPLAY.FLEX]}
+        flexWrap={FLEX_WRAP.WRAP}
         flexDirection={[
           FLEX_DIRECTION.COLUMN,
           FLEX_DIRECTION.COLUMN,
@@ -704,6 +705,51 @@ export const ResponsiveProps = () => {
         >
           Responsive Border Radius 2
         </Box>
+      </Box>
+      <Typography boxProps={{ marginBottom: 4, marginTop: 4 }}>
+        Boxes below are only visible on certain screen sizes
+      </Typography>
+      <Box
+        padding={4}
+        display={[DISPLAY.BLOCK, DISPLAY.NONE]}
+        backgroundColor={Color.infoMuted}
+      >
+        This box is only visible on screens 0px - 575px
+      </Box>
+      <Box
+        padding={4}
+        display={[DISPLAY.BLOCK, null, DISPLAY.NONE]}
+        backgroundColor={Color.warningMuted}
+      >
+        This box is only visible on screens 0px - 767px
+      </Box>
+      <Box
+        padding={4}
+        display={[DISPLAY.BLOCK, null, null, DISPLAY.NONE]}
+        backgroundColor={Color.errorMuted}
+      >
+        This box is only visible on screens 0px - 1279px
+      </Box>
+      <Box
+        padding={4}
+        display={[DISPLAY.NONE, null, null, DISPLAY.BLOCK]}
+        backgroundColor={Color.successMuted}
+      >
+        This box is only visible on screens 1280px and above
+      </Box>
+      <Box
+        padding={4}
+        display={[DISPLAY.NONE, null, DISPLAY.BLOCK]}
+        backgroundColor={Color.backgroundAlternative}
+      >
+        This box is only visible on screens 768px and above
+      </Box>
+      <Box
+        padding={4}
+        display={[DISPLAY.NONE, DISPLAY.BLOCK]}
+        borderColor={Color.borderDefault}
+      >
+        This box is only visible on screens 576px and above
       </Box>
     </>
   );

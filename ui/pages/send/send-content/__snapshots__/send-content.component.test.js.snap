@@ -197,7 +197,7 @@ exports[`SendContent Component render should match snapshot 1`] = `
                       Gas
                     </div>
                     <span
-                      class="box box--margin-bottom-1 box--flex-direction-row typography gas-display__title__estimate typography--p typography--weight-normal typography--style-italic typography--color-text-muted"
+                      class="box box--margin-top-0 box--margin-bottom-1 box--flex-direction-row typography gas-display__title__estimate typography--p typography--weight-normal typography--style-italic typography--color-text-muted"
                     >
                       (
                       estimated

@@ -17,7 +17,7 @@ exports[`Reveal Seed Page should match snapshot 1`] = `
          
         The 
         <a
-          class="box mm-button-base mm-button-link mm-button-link--size-inherit box--display-inline-flex box--flex-direction-row box--justify-content-center box--align-items-center box--color-primary-default box--background-color-transparent"
+          class="box mm-button-base mm-button-link mm-button-link--size-inherit box--padding-right-0 box--padding-left-0 box--display-inline-flex box--flex-direction-row box--justify-content-center box--align-items-center box--color-primary-default box--background-color-transparent"
           href="https://metamask.zendesk.com/hc/en-us/articles/360060826432-What-is-a-Secret-Recovery-Phrase-and-how-to-keep-your-crypto-wallet-secure"
           rel="noopener noreferrer"
           target="_blank"
@@ -46,7 +46,7 @@ exports[`Reveal Seed Page should match snapshot 1`] = `
          
         MetaMask is a 
         <a
-          class="box mm-button-base mm-button-link mm-button-link--size-inherit box--display-inline-flex box--flex-direction-row box--justify-content-center box--align-items-center box--color-primary-default box--background-color-transparent"
+          class="box mm-button-base mm-button-link mm-button-link--size-inherit box--padding-right-0 box--padding-left-0 box--display-inline-flex box--flex-direction-row box--justify-content-center box--align-items-center box--color-primary-default box--background-color-transparent"
           href="https://metamask.zendesk.com/hc/en-us/articles/360059952212-MetaMask-is-a-non-custodial-wallet"
           rel="noopener noreferrer"
           target="_blank"
@@ -94,11 +94,11 @@ exports[`Reveal Seed Page should match snapshot 1`] = `
         Enter password to continue
       </label>
       <div
-        class="box mm-text-field mm-text-field--size-lg mm-text-field--focused mm-text-field--truncate box--display-inline-flex box--flex-direction-row box--align-items-center box--width-full box--background-color-background-default box--rounded-sm box--border-width-1 box--border-style-solid"
+        class="box mm-text-field mm-text-field--size-lg mm-text-field--focused mm-text-field--truncate box--padding-right-0 box--padding-left-0 box--display-inline-flex box--flex-direction-row box--align-items-center box--width-full box--background-color-background-default box--rounded-sm box--border-width-1 box--border-style-solid"
       >
         <input
           autocomplete="off"
-          class="box mm-text mm-input mm-text-field__input mm-text--body-md mm-text--color-text-default box--padding-right-4 box--padding-left-4 box--flex-direction-row box--background-color-transparent box--border-style-none"
+          class="box mm-text mm-input mm-text-field__input mm-text--body-md mm-text--color-text-default box--margin-0 box--padding-0 box--padding-right-4 box--padding-left-4 box--flex-direction-row box--background-color-transparent box--border-style-none"
           data-testid="input-password"
           focused="true"
           id="password-box"

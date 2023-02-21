@@ -33,12 +33,18 @@ describe('Add account', function () {
       },
       async ({ driver }) => {
         await driver.navigate();
-        await driver.fill('#password', 'correct horse battery staple');
+        await driver.pasteIntoField(
+          '#password',
+          'correct horse battery staple',
+        );
         await driver.press('#password', driver.Key.ENTER);
 
         await driver.clickElement('.account-menu__icon');
         await driver.clickElement({ text: 'Create account', tag: 'div' });
-        await driver.fill('.new-account-create-form input', '2nd account');
+        await driver.pasteIntoField(
+          '.new-account-create-form input',
+          '2nd account',
+        );
         await driver.clickElement({ text: 'Create', tag: 'button' });
 
         const accountName = await driver.waitForSelector({
@@ -69,7 +75,10 @@ describe('Add account', function () {
 
         await driver.clickElement('.account-menu__icon');
         await driver.clickElement({ text: 'Create account', tag: 'div' });
-        await driver.fill('.new-account-create-form input', '2nd account');
+        await driver.pasteIntoField(
+          '.new-account-create-form input',
+          '2nd account',
+        );
         await driver.clickElement({ text: 'Create', tag: 'button' });
 
         await driver.clickElement(
@@ -94,7 +103,10 @@ describe('Add account', function () {
         // generate a third accound
         await driver.clickElement('.account-menu__icon');
         await driver.clickElement({ text: 'Create account', tag: 'div' });
-        await driver.fill('.new-account-create-form input', '3rd account');
+        await driver.pasteIntoField(
+          '.new-account-create-form input',
+          '3rd account',
+        );
         await driver.clickElement({ text: 'Create', tag: 'button' });
 
         await driver.clickElement(
@@ -141,8 +153,14 @@ describe('Add account', function () {
           testSeedPhrase,
         );
 
-        await driver.fill('#password', 'correct horse battery staple');
-        await driver.fill('#confirm-password', 'correct horse battery staple');
+        await driver.pasteIntoField(
+          '#password',
+          'correct horse battery staple',
+        );
+        await driver.pasteIntoField(
+          '#confirm-password',
+          'correct horse battery staple',
+        );
         await driver.clickElement({
           text: enLocaleMessages.restore.message,
           tag: 'button',
@@ -152,7 +170,10 @@ describe('Add account', function () {
         // recreate a "2nd account"
         await driver.clickElement('.account-menu__icon');
         await driver.clickElement({ text: 'Create account', tag: 'div' });
-        await driver.fill('.new-account-create-form input', '2nd account');
+        await driver.pasteIntoField(
+          '.new-account-create-form input',
+          '2nd account',
+        );
         await driver.clickElement({ text: 'Create', tag: 'button' });
 
         await driver.clickElement(
@@ -181,7 +202,10 @@ describe('Add account', function () {
         // re-generate a third accound
         await driver.clickElement('.account-menu__icon');
         await driver.clickElement({ text: 'Create account', tag: 'div' });
-        await driver.fill('.new-account-create-form input', '3rd account');
+        await driver.pasteIntoField(
+          '.new-account-create-form input',
+          '3rd account',
+        );
         await driver.clickElement({ text: 'Create', tag: 'button' });
 
         await driver.clickElement(
@@ -216,14 +240,20 @@ describe('Add account', function () {
       },
       async ({ driver }) => {
         await driver.navigate();
-        await driver.fill('#password', 'correct horse battery staple');
+        await driver.pasteIntoField(
+          '#password',
+          'correct horse battery staple',
+        );
         await driver.press('#password', driver.Key.ENTER);
 
         await driver.delay(regularDelayMs);
 
         await driver.clickElement('.account-menu__icon');
         await driver.clickElement({ text: 'Create account', tag: 'div' });
-        await driver.fill('.new-account-create-form input', '2nd account');
+        await driver.pasteIntoField(
+          '.new-account-create-form input',
+          '2nd account',
+        );
         await driver.clickElement({ text: 'Create', tag: 'button' });
 
         await driver.clickElement(
@@ -241,7 +271,7 @@ describe('Add account', function () {
         await driver.clickElement({ text: 'Import account', tag: 'div' });
 
         // enter private key',
-        await driver.fill('#private-key-box', testPrivateKey);
+        await driver.pasteIntoField('#private-key-box', testPrivateKey);
         await driver.clickElement({ text: 'Import', tag: 'button' });
 
         // should show the correct account name
