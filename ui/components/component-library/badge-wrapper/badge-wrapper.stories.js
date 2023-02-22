@@ -67,7 +67,7 @@ export const DefaultStory = (args) => (
     badge={
       <AvatarNetwork
         size={Size.XS}
-        name="Arbitrum One"
+        name="Avalanche"
         src="./images/avax-token.png"
         borderColor={BorderColor.borderMuted}
       />
@@ -77,10 +77,7 @@ export const DefaultStory = (args) => (
     {args.children ? (
       args.children
     ) : (
-      <AvatarAccount
-        address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1"
-        size={Size.MD}
-      />
+      <AvatarAccount address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1" />
     )}
   </BadgeWrapper>
 );
@@ -93,7 +90,7 @@ export const Children = () => (
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
@@ -105,7 +102,7 @@ export const Children = () => (
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
@@ -121,7 +118,7 @@ export const Children = () => (
       badge={
         <AvatarNetwork
           size={Size.SM}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
@@ -145,16 +142,13 @@ export const Badge = () => (
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
       }
     >
-      <AvatarAccount
-        address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1"
-        size={Size.MD}
-      />
+      <AvatarAccount address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1" />
     </BadgeWrapper>
     <BadgeWrapper
       badge={
@@ -216,63 +210,51 @@ export const Position = () => (
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
       }
     >
-      <AvatarAccount
-        address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1"
-        size={Size.MD}
-      />
+      <AvatarAccount address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1" />
     </BadgeWrapper>
     <BadgeWrapper
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
       }
     >
-      <AvatarAccount
-        address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1"
-        size={Size.MD}
-      />
+      <AvatarAccount address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1" />
     </BadgeWrapper>
     <BadgeWrapper
       position={BadgeWrapperPosition.bottomLeft}
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
       }
     >
-      <AvatarAccount
-        address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1"
-        size={Size.MD}
-      />
+      <AvatarAccount address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1" />
     </BadgeWrapper>
     <BadgeWrapper
       position={BadgeWrapperPosition.bottomRight}
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
       }
     >
-      <AvatarAccount
-        address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1"
-        size={Size.MD}
-      />
+      <AvatarAccount address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1" />
     </BadgeWrapper>
   </Box>
 );
@@ -283,17 +265,14 @@ export const PositionObj = () => (
       badge={
         <AvatarNetwork
           size={Size.XS}
-          name="Arbitrum One"
+          name="Avalanche"
           src="./images/avax-token.png"
           borderColor={BorderColor.borderMuted}
         />
       }
       positionObj={{ top: 4, right: -8 }}
     >
-      <AvatarAccount
-        address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1"
-        size={Size.SM}
-      />
+      <AvatarAccount address="0x5CfE73b6021E818B776b421B1c4Db2474086a7e1" />
     </BadgeWrapper>
   </Box>
 );
