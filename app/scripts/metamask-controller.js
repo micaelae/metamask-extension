@@ -2295,7 +2295,7 @@ export default class MetamaskController extends EventEmitter {
     ticker,
     blockExplorerUrl,
   }) {
-    const networkConfigUUID = this.networkController.upsertNetworkConfiguration(
+    const networkConfigurationId = this.networkController.upsertNetworkConfiguration(
       {
         rpcUrl,
         chainId,
@@ -2320,7 +2320,7 @@ export default class MetamaskController extends EventEmitter {
       },
     });
 
-    return networkConfigUUID;
+    return networkConfigurationId;
   }
 
   /**
@@ -4394,7 +4394,7 @@ export default class MetamaskController extends EventEmitter {
    * @param config.ticker - Currency ticker.
    * @param config.chainName - Personalized network name.
    * @param config.rpcPrefs - Personalized preferences.
-   * @returns uuid for the added or updated network configuration
+   * @returns id for the added or updated network configuration
    */
   async upsertAndSetNetworkConfiguration({
     rpcUrl,
@@ -4403,7 +4403,7 @@ export default class MetamaskController extends EventEmitter {
     chainName,
     rpcPrefs,
   }) {
-    const uuid = await this.upsertNetworkConfiguration({
+    const networkConfigurationId = await this.upsertNetworkConfiguration({
       rpcUrl,
       chainId,
       ticker,
@@ -4411,9 +4411,9 @@ export default class MetamaskController extends EventEmitter {
       rpcPrefs,
     });
 
-    await this.networkController.setCurrentNetwork(uuid);
+    await this.networkController.setCurrentNetwork(networkConfigurationId);
 
-    return uuid;
+    return networkConfigurationId;
   }
 
   /**

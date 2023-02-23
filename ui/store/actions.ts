@@ -2454,12 +2454,12 @@ export function upsertAndSetNetworkConfiguration({
     );
 
     try {
-      const uuid: string = await submitRequestToBackground(
+      const networkConfigurationId: string = await submitRequestToBackground(
         'upsertAndSetNetworkConfiguration',
         [{ rpcUrl, chainId, ticker, chainName: chainName || rpcUrl, rpcPrefs }],
       );
-      dispatch(setNewNetworkAdded({ uuid, chainName }));
-      dispatch(updateNetworkTarget(rpcUrl, uuid));
+      dispatch(setNewNetworkAdded({ networkConfigurationId, chainName }));
+      dispatch(updateNetworkTarget(rpcUrl, networkConfigurationId));
     } catch (error) {
       logErrorWithMessage(error);
       dispatch(displayWarning('Had a problem changing networks!'));
@@ -2486,12 +2486,12 @@ export function upsertNetworkConfiguration({
     );
 
     try {
-      const uuid: string = await submitRequestToBackground(
+      const networkConfigurationId: string = await submitRequestToBackground(
         'upsertNetworkConfiguration',
         [{ rpcUrl, chainId, ticker, chainName: chainName || rpcUrl, rpcPrefs }],
       );
-      dispatch(setNewNetworkAdded({ uuid, chainName }));
-      dispatch(updateNetworkTarget(rpcUrl, uuid));
+      dispatch(setNewNetworkAdded({ networkConfigurationId, chainName }));
+      dispatch(updateNetworkTarget(rpcUrl, networkConfigurationId));
     } catch (error) {
       log.error(error);
       dispatch(displayWarning('Had a problem adding network!'));
@@ -2500,14 +2500,14 @@ export function upsertNetworkConfiguration({
 }
 
 export function editAndSetNetworkConfiguration({
-  uuid,
+  networkConfigurationId,
   rpcUrl,
   chainId,
   chainName,
   rpcPrefs,
   ticker = EtherDenomination.ETH,
 }: {
-  uuid: string;
+  networkConfigurationId: string;
   rpcUrl: string;
   chainId: string;
   chainName: string;
@@ -2515,9 +2515,9 @@ export function editAndSetNetworkConfiguration({
   ticker: string;
 }): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
   return async (dispatch) => {
-    log.debug(`background.removeNetworkConfiguration: ${uuid}`);
+    log.debug(`background.removeNetworkConfiguration: ${networkConfigurationId}`);
     try {
-      await submitRequestToBackground('removeNetworkConfiguration', [uuid]);
+      await submitRequestToBackground('removeNetworkConfiguration', [networkConfigurationId]);
     } catch (error) {
       logErrorWithMessage(error);
       dispatch(displayWarning('Had a problem removing network!'));
@@ -2535,7 +2535,7 @@ export function editAndSetNetworkConfiguration({
         },
       ]);
 
-      dispatch(updateNetworkTarget(rpcUrl, uuid));
+      dispatch(updateNetworkTarget(rpcUrl, networkConfigurationId));
     } catch (error) {
       logErrorWithMessage(error);
       dispatch(displayWarning('Had a problem changing networks!'));
@@ -2544,12 +2544,12 @@ export function editAndSetNetworkConfiguration({
 }
 
 export function setCurrentNetwork(
-  uuid: string,
+  networkConfigurationId: string,
 ): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
   return async (dispatch) => {
-    log.debug(`background.setCurrentNetwork: ${uuid}`);
+    log.debug(`background.setCurrentNetwork: ${networkConfigurationId}`);
     try {
-      await submitRequestToBackground('setCurrentNetwork', [uuid]);
+      await submitRequestToBackground('setCurrentNetwork', [networkConfigurationId]);
     } catch (error) {
       logErrorWithMessage(error);
       dispatch(displayWarning('Had a problem changing networks!'));
@@ -2574,12 +2574,12 @@ export function rollbackToPreviousProvider(): ThunkAction<
 }
 
 export function removeNetworkConfiguration(
-  uuid: string,
+  networkConfigurationId: string,
 ): ThunkAction<Promise<void>, MetaMaskReduxState, unknown, AnyAction> {
   return (dispatch) => {
-    log.debug(`background.removeNetworkConfiguration: ${uuid}`);
+    log.debug(`background.removeNetworkConfiguration: ${networkConfigurationId}`);
     return new Promise((resolve, reject) => {
-      callBackgroundMethod('removeNetworkConfiguration', [uuid], (err) => {
+      callBackgroundMethod('removeNetworkConfiguration', [networkConfigurationId], (err) => {
         if (err) {
           logErrorWithMessage(err);
           dispatch(displayWarning('Had a problem removing network!'));
@@ -3768,32 +3768,32 @@ export function setFirstTimeFlowType(
   };
 }
 
-export function setSelectedNetworkUUID(
-  networkConfigUUID: string,
+export function setSelectedNetworkConfigurationId(
+  networkConfigurationId: string,
 ): PayloadAction<string> {
   return {
-    type: actionConstants.SET_SELECTED_NETWORK_UUID,
-    payload: networkConfigUUID,
+    type: actionConstants.SET_SELECTED_NETWORK_CONFIGURATION_ID,
+    payload: networkConfigurationId,
   };
 }
 
 export function setNewNetworkAdded({
-  uuid,
+  networkConfigurationId,
   chainName,
 }: {
-  uuid: string;
+  networkConfigurationId: string;
   chainName: string;
 }): PayloadAction<object> {
   return {
     type: actionConstants.SET_NEW_NETWORK_ADDED,
-    payload: { uuid, chainName },
+    payload: { networkConfigurationId, chainName },
   };
 }
 
-export function updateNetworkTarget(rpcUrl: string, uuid: string) {
+export function updateNetworkTarget(rpcUrl: string, networkConfigurationId: string) {
   return {
     type: actionConstants.UPDATE_NETWORK_TARGET,
-    value: { rpcUrl, uuid },
+    value: { rpcUrl, networkConfigurationId },
   };
 }
 
@@ -4593,11 +4593,11 @@ export function requestAddNetworkApproval(
 ): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
   return async (dispatch) => {
     try {
-      const uuid: string = await submitRequestToBackground(
+      const networkConfigurationId: string = await submitRequestToBackground(
         'requestAddNetworkApproval',
         [customRpc, originIsMetaMask],
       );
-      dispatch(setNewNetworkAdded({ uuid, chainName: customRpc.chainName }));
+      dispatch(setNewNetworkAdded({ networkConfigurationId, chainName: customRpc.chainName }));
     } catch (error) {
       logErrorWithMessage(error);
       dispatch(displayWarning('Had a problem changing networks!'));

@@ -62,8 +62,8 @@ function mapDispatchToProps(dispatch) {
     setProviderType: (type) => {
       dispatch(actions.setProviderType(type));
     },
-    setCurrentNetwork: (uuid) => {
-      dispatch(actions.setCurrentNetwork(uuid));
+    setCurrentNetwork: (networkConfigurationId) => {
+      dispatch(actions.setCurrentNetwork(networkConfigurationId));
     },
     hideNetworkDropdown: () => dispatch(actions.hideNetworkDropdown()),
     displayInvalidCustomNetworkAlert: (networkName) => {
@@ -155,7 +155,7 @@ class NetworkDropdown extends Component {
   }
 
   renderCustomRpcList(networkConfigurations, provider, opts = {}) {
-    return Object.entries(networkConfigurations).map(([uuid, entry]) => {
+    return Object.entries(networkConfigurations).map(([networkConfigurationId, entry]) => {
       const { rpcUrl, chainId, chainName = '' } = entry;
       const isCurrentRpcTarget =
         provider.type === NETWORK_TYPES.RPC && rpcUrl === provider.rpcUrl;
@@ -166,7 +166,7 @@ class NetworkDropdown extends Component {
           closeMenu={() => this.props.hideNetworkDropdown()}
           onClick={() => {
             if (isPrefixedFormattedHexString(chainId)) {
-              this.props.setCurrentNetwork(uuid);
+              this.props.setCurrentNetwork(networkConfigurationId);
             } else {
               this.props.displayInvalidCustomNetworkAlert(chainName || rpcUrl);
             }
@@ -207,7 +207,7 @@ class NetworkDropdown extends Component {
               onClick={(e) => {
                 e.stopPropagation();
                 this.props.showConfirmDeleteNetworkModal({
-                  target: uuid,
+                  target: networkConfigurationId,
                   onConfirm: () => undefined,
                 });
               }}
