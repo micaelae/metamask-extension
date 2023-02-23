@@ -155,29 +155,31 @@ class NetworkDropdown extends Component {
   }
 
   renderCustomRpcList(networkConfigurations, provider, opts = {}) {
-    return Object.entries(networkConfigurations).map(([networkConfigurationId, entry]) => {
-      const { rpcUrl, chainId, chainName = '' } = entry;
-      const isCurrentRpcTarget =
-        provider.type === NETWORK_TYPES.RPC && rpcUrl === provider.rpcUrl;
-
-      return (
-        <DropdownMenuItem
-          key={`common${rpcUrl}`}
-          closeMenu={() => this.props.hideNetworkDropdown()}
-          onClick={() => {
-            if (isPrefixedFormattedHexString(chainId)) {
-              this.props.setCurrentNetwork(networkConfigurationId);
-            } else {
-              this.props.displayInvalidCustomNetworkAlert(chainName || rpcUrl);
-            }
-          }}
-          style={{
-            fontSize: '16px',
-            lineHeight: '20px',
-            padding: '16px',
-          }}
-        >
-          {isCurrentRpcTarget ? (
+    return Object.entries(networkConfigurations).map(
+      ([networkConfigurationId, networkConfiguration]) => {
+        const { rpcUrl, chainId, chainName = '' } = networkConfiguration;
+        const isCurrentRpcTarget =
+          provider.type === NETWORK_TYPES.RPC && rpcUrl === provider.rpcUrl;
+        return (
+          <DropdownMenuItem
+            key={`common${rpcUrl}`}
+            closeMenu={() => this.props.hideNetworkDropdown()}
+            onClick={() => {
+              if (isPrefixedFormattedHexString(chainId)) {
+                this.props.setCurrentNetwork(networkConfigurationId);
+              } else {
+                this.props.displayInvalidCustomNetworkAlert(
+                  chainName || rpcUrl,
+                );
+              }
+            }}
+            style={{
+              fontSize: '16px',
+              lineHeight: '20px',
+              padding: '16px',
+            }}
+          >
+            {isCurrentRpcTarget ? (
             <Icon name={ICON_NAMES.CHECK} color={IconColor.successDefault} />
           ) : (
             <div className="network-check__transparent">✓</div>
@@ -207,15 +209,16 @@ class NetworkDropdown extends Component {
               onClick={(e) => {
                 e.stopPropagation();
                 this.props.showConfirmDeleteNetworkModal({
-                  target: networkConfigurationId,
+                  target: rpcUrl,
                   onConfirm: () => undefined,
                 });
               }}
             />
           )}
-        </DropdownMenuItem>
-      );
-    });
+          </DropdownMenuItem>
+        );
+      },
+    );
   }
 
   getNetworkName() {

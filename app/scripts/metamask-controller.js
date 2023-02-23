@@ -2295,8 +2295,8 @@ export default class MetamaskController extends EventEmitter {
     ticker,
     blockExplorerUrl,
   }) {
-    const networkConfigurationId = this.networkController.upsertNetworkConfiguration(
-      {
+    const networkConfigurationId =
+      this.networkController.upsertNetworkConfiguration({
         rpcUrl,
         chainId,
         ticker,
@@ -2304,8 +2304,7 @@ export default class MetamaskController extends EventEmitter {
         rpcPrefs: {
           blockExplorerUrl,
         },
-      },
-    );
+      });
 
     this.metaMetricsController.trackEvent({
       event: 'Custom Network Added',
