@@ -180,7 +180,7 @@ function defaultFixture() {
           type: 'rpc',
         },
         networkConfigurations: {
-          testUUID: {
+          networkConfigurationId: {
             chainId: CHAIN_IDS.LOCALHOST,
             chainName: 'Localhost 8545',
             rpcPrefs: {},
@@ -309,7 +309,7 @@ function onboardingFixture() {
           chainName: 'Localhost 8545',
         },
         networkConfigurations: {
-          testUUID: {
+          networkConfigurationId: {
             chainId: CHAIN_IDS.LOCALHOST,
             chainName: 'Localhost 8545',
             rpcPrefs: {},

@@ -12,10 +12,10 @@ jest.mock('uuid', () => {
 
 describe('migration #81', () => {
   beforeEach(() => {
-    v4.mockImplementationOnce(() => 'uuid-1')
-      .mockImplementationOnce(() => 'uuid-2')
-      .mockImplementationOnce(() => 'uuid-3')
-      .mockImplementationOnce(() => 'uuid-4');
+    v4.mockImplementationOnce(() => 'network-configuration-id-1')
+      .mockImplementationOnce(() => 'network-configuration-id-2')
+      .mockImplementationOnce(() => 'network-configuration-id-3')
+      .mockImplementationOnce(() => 'network-configuration-id-4');
   });
 
   afterEach(() => {
@@ -92,14 +92,14 @@ describe('migration #81', () => {
         PreferencesController: {},
         NetworkController: {
           networkConfigurations: {
-            'uuid-1': {
+            'network-configuration-id-1': {
               chainId: '0x539',
               chainName: 'Localhost 8545',
               rpcPrefs: {},
               rpcUrl: 'http://localhost:8545',
               ticker: 'ETH',
             },
-            'uuid-2': {
+            'network-configuration-id-2': {
               chainId: '0xa4b1',
               chainName: 'Arbitrum One',
               rpcPrefs: {
@@ -109,7 +109,7 @@ describe('migration #81', () => {
                 'https://arbitrum-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'ETH',
             },
-            'uuid-3': {
+            'network-configuration-id-3': {
               chainId: '0x4e454152',
               chainName: 'Aurora Mainnet',
               rpcPrefs: {
@@ -119,7 +119,7 @@ describe('migration #81', () => {
                 'https://aurora-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'Aurora ETH',
             },
-            'uuid-4': {
+            'network-configuration-id-4': {
               chainId: '0x38',
               chainName:
                 'BNB Smart Chain (previously Binance Smart Chain Mainnet)',
@@ -254,14 +254,14 @@ describe('migration #81', () => {
             type: 'mainnet',
           },
           networkConfigurations: {
-            'uuid-1': {
+            'network-configuration-id-1': {
               chainId: '0x539',
               chainName: 'Localhost 8545',
               rpcPrefs: {},
               rpcUrl: 'http://localhost:8545',
               ticker: 'ETH',
             },
-            'uuid-2': {
+            'network-configuration-id-2': {
               chainId: '0xa4b1',
               chainName: 'Arbitrum One',
               rpcPrefs: {
@@ -271,7 +271,7 @@ describe('migration #81', () => {
                 'https://arbitrum-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'ETH',
             },
-            'uuid-3': {
+            'network-configuration-id-3': {
               chainId: '0x4e454152',
               chainName: 'Aurora Mainnet',
               rpcPrefs: {
@@ -281,7 +281,7 @@ describe('migration #81', () => {
                 'https://aurora-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'Aurora ETH',
             },
-            'uuid-4': {
+            'network-configuration-id-4': {
               chainId: '0x38',
               chainName:
                 'BNB Smart Chain (previously Binance Smart Chain Mainnet)',
@@ -335,14 +335,14 @@ describe('migration #81', () => {
             type: 'mainnet',
           },
           networkConfigurations: {
-            'uuid-1': {
+            'network-configuration-id-1': {
               chainId: '0x539',
               chainName: 'Localhost 8545',
               rpcPrefs: {},
               rpcUrl: 'http://localhost:8545',
               ticker: 'ETH',
             },
-            'uuid-2': {
+            'network-configuration-id-2': {
               chainId: '0xa4b1',
               chainName: 'Arbitrum One',
               rpcPrefs: {
@@ -352,7 +352,7 @@ describe('migration #81', () => {
                 'https://arbitrum-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'ETH',
             },
-            'uuid-3': {
+            'network-configuration-id-3': {
               chainId: '0x4e454152',
               chainName: 'Aurora Mainnet',
               rpcPrefs: {
@@ -362,7 +362,7 @@ describe('migration #81', () => {
                 'https://aurora-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'Aurora ETH',
             },
-            'uuid-4': {
+            'network-configuration-id-4': {
               chainId: '0x38',
               chainName:
                 'BNB Smart Chain (previously Binance Smart Chain Mainnet)',
@@ -415,14 +415,14 @@ describe('migration #81', () => {
             type: 'mainnet',
           },
           networkConfigurations: {
-            'uuid-1': {
+            'network-configuration-id-1': {
               chainId: '0x539',
               chainName: 'Localhost 8545',
               rpcPrefs: {},
               rpcUrl: 'http://localhost:8545',
               ticker: 'ETH',
             },
-            'uuid-2': {
+            'network-configuration-id-2': {
               chainId: '0xa4b1',
               chainName: 'Arbitrum One',
               rpcPrefs: {
@@ -432,7 +432,7 @@ describe('migration #81', () => {
                 'https://arbitrum-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'ETH',
             },
-            'uuid-3': {
+            'network-configuration-id-3': {
               chainId: '0x4e454152',
               chainName: 'Aurora Mainnet',
               rpcPrefs: {
@@ -442,7 +442,7 @@ describe('migration #81', () => {
                 'https://aurora-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
               ticker: 'Aurora ETH',
             },
-            'uuid-4': {
+            'network-configuration-id-4': {
               chainId: '0x38',
               chainName:
                 'BNB Smart Chain (previously Binance Smart Chain Mainnet)',

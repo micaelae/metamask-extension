@@ -154,7 +154,7 @@ describe('Custom network', function () {
         fixtures: new FixtureBuilder()
           .withNetworkController({
             networkConfigurations: {
-              testUUID: {
+              networkConfigurationId: {
                 rpcUrl: networkURL,
                 chainId: chainID,
                 chainName: networkNAME,
