@@ -186,8 +186,8 @@
  * @property {'token_detection_enabled'} TOKEN_DETECTION_ENABLED - when token detection feature is toggled we
  * identify the token_detection_enabled trait
  * @property {'install_date_ext'} INSTALL_DATE_EXT - when the user installed the extension
- * @property {'security_provider'} SECURITY_PROVIDER - when security provider feature is toggled we
- * identify the security_provider trait
+ * @property {'security_providers'} SECURITY_PROVIDERS - when security provider feature is toggled we
+ * identify the security_providers trait
  */
 
 /**
@@ -210,7 +210,7 @@ export const TRAITS = {
   THEME: 'theme',
   THREE_BOX_ENABLED: 'three_box_enabled',
   TOKEN_DETECTION_ENABLED: 'token_detection_enabled',
-  SECURITY_PROVIDER: 'security_provider',
+  SECURITY_PROVIDERS: 'security_providers',
 };
 
 /**
@@ -240,7 +240,7 @@ export const TRAITS = {
  *  enabled? (deprecated)
  * @property {string} [theme] - which theme the user has selected
  * @property {boolean} [token_detection_enabled] - does the user have token detection is enabled?
- * @property {Array<string>} [security_provider] - whether security provider feature toggle is on or off
+ * @property {Array<string>} [security_providers] - whether security provider feature toggle is on or off
  */
 
 // Mixpanel converts the zero address value to a truly anonymous event, which
