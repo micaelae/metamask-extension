@@ -72,7 +72,9 @@ async function switchEthereumChainHandler(
     return end();
   }
 
-  const otherKeys = Object.keys(omit(req.params[0], ['chainId']));
+  const otherKeys = Object.keys(
+    omit(req.params[0], ['chainId', 'networkConfigurationId']),
+  );
 
   if (otherKeys.length > 0) {
     return end(

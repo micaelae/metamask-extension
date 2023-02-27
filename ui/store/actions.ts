@@ -2435,7 +2435,7 @@ export function setProviderType(
   };
 }
 
-export function upsertAndSetNetworkConfiguration({
+export function upsertAndSetActiveNetwork({
   rpcUrl,
   chainId,
   chainName,
@@ -2450,12 +2450,12 @@ export function upsertAndSetNetworkConfiguration({
 }): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
   return async (dispatch) => {
     log.debug(
-      `background.upsertAndSetNetworkConfiguration: ${rpcUrl} ${chainId} ${ticker} ${chainName}`,
+      `background.upsertAndSetActiveNetwork: ${rpcUrl} ${chainId} ${ticker} ${chainName}`,
     );
 
     try {
       const networkConfigurationId: string = await submitRequestToBackground(
-        'upsertAndSetNetworkConfiguration',
+        'upsertAndSetActiveNetwork',
         [{ rpcUrl, chainId, ticker, chainName: chainName || rpcUrl, rpcPrefs }],
       );
       dispatch(setNewNetworkAdded({ networkConfigurationId, chainName }));
@@ -2529,7 +2529,7 @@ export function editAndSetNetworkConfiguration({
     }
 
     try {
-      await submitRequestToBackground('upsertAndSetNetworkConfiguration', [
+      await submitRequestToBackground('upsertAndSetActiveNetwork', [
         {
           rpcUrl,
           chainId,

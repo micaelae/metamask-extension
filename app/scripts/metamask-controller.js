@@ -1829,8 +1829,7 @@ export default class MetamaskController extends EventEmitter {
         networkController.setActiveNetwork.bind(networkController),
       getNetworkConfigurations:
         networkController.getNetworkConfigurations.bind(networkController),
-      upsertAndSetNetworkConfiguration:
-        this.upsertAndSetNetworkConfiguration.bind(this),
+      upsertAndSetActiveNetwork: this.upsertAndSetActiveNetwork.bind(this),
       upsertNetworkConfiguration: this.upsertNetworkConfiguration.bind(this),
       requestAddNetworkApproval: this.requestAddNetworkApproval.bind(this),
       // PreferencesController
@@ -4397,7 +4396,7 @@ export default class MetamaskController extends EventEmitter {
    * @param config.rpcPrefs - Personalized preferences.
    * @returns id for the added or updated network configuration
    */
-  async upsertAndSetNetworkConfiguration({
+  async upsertAndSetActiveNetwork({
     rpcUrl,
     chainId,
     ticker = 'ETH',

@@ -23,7 +23,7 @@ import Button from '../../../../components/ui/button';
 import FormField from '../../../../components/ui/form-field';
 import {
   setSelectedNetworkConfigurationId,
-  upsertAndSetNetworkConfiguration,
+  upsertAndSetActiveNetwork,
   editAndSetNetworkConfiguration,
   showModal,
   setNewNetworkAdded,
@@ -520,7 +520,7 @@ const NetworksForm = ({
         );
       } else {
         networkConfigurationId = await dispatch(
-          upsertAndSetNetworkConfiguration({
+          upsertAndSetActiveNetwork({
             rpcUrl,
             ticker,
             chainId: prefixedChainId,

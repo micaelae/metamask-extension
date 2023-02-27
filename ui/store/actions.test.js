@@ -1253,13 +1253,13 @@ describe('Actions', () => {
         .stub()
         .callsFake((_, cb) => cb());
 
-      const upsertAndSetNetworkConfigurationStub = sinon
+      const upsertAndSetActiveNetworkStub = sinon
         .stub()
         .callsFake((_, cb) => cb());
 
       background.getApi.returns({
         removeNetworkConfiguration: removeNetworkConfigurationStub,
-        upsertAndSetNetworkConfiguration: upsertAndSetNetworkConfigurationStub,
+        upsertAndSetActiveNetwork: upsertAndSetActiveNetworkStub,
       });
       _setBackgroundConnection(background.getApi());
 
@@ -1274,7 +1274,7 @@ describe('Actions', () => {
         }),
       );
       expect(removeNetworkConfigurationStub.callCount).toStrictEqual(1);
-      expect(upsertAndSetNetworkConfigurationStub.callCount).toStrictEqual(1);
+      expect(upsertAndSetActiveNetworkStub.callCount).toStrictEqual(1);
 
       const expectedActions = [
         {
@@ -1291,7 +1291,7 @@ describe('Actions', () => {
     it('displays warning when removeNetworkConfiguration throws', async () => {
       const store = mockStore();
 
-      const upsertAndSetNetworkConfigurationStub = sinon
+      const upsertAndSetActiveNetworkStub = sinon
         .stub()
         .callsFake((_, cb) => cb());
 
@@ -1301,7 +1301,7 @@ describe('Actions', () => {
 
       background.getApi.returns({
         removeNetworkConfiguration: removeNetworkConfigurationStub,
-        upsertAndSetNetworkConfiguration: upsertAndSetNetworkConfigurationStub,
+        upsertAndSetActiveNetwork: upsertAndSetActiveNetworkStub,
       });
 
       _setBackgroundConnection(background.getApi());
