@@ -4,7 +4,7 @@ import reducers from '../ducks';
 import * as actionConstants from './actionConstants';
 
 describe('Redux actionConstants', () => {
-  describe('UPDATE_NETWORK_TARGET', () => {
+  describe('UPDATE_ACTIVE_NETWORK', () => {
     const initialState = {
       metamask: {
         provider: {
@@ -20,7 +20,7 @@ describe('Redux actionConstants', () => {
     freeze(initialState);
     it('sets the state.metamask.rpcUrl property of the state to the action.value', () => {
       const action = {
-        type: actionConstants.UPDATE_NETWORK_TARGET,
+        type: actionConstants.UPDATE_ACTIVE_NETWORK,
         value: { rpcUrl: 'foo', networkConfigurationId: 'baz' },
       };
 

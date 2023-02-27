@@ -93,6 +93,7 @@ const firstTimeState = {
         chainId: '0x1',
         ticker: 'ETH',
         chainName: 'alt mainnet',
+        networkConfigurationId: NETWORK_CONFIGURATION_ID_1,
       },
       [NETWORK_CONFIGURATION_ID_2]: {
         rpcUrl: POLYGON_RPC_URL,
@@ -100,6 +101,7 @@ const firstTimeState = {
         chainId: '0x89',
         ticker: 'MATIC',
         chainName: 'Polygon',
+        networkConfigurationId: NETWORK_CONFIGURATION_ID_2,
       },
     },
     networkDetails: {

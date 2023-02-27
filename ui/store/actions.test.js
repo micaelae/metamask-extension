@@ -1278,7 +1278,7 @@ describe('Actions', () => {
 
       const expectedActions = [
         {
-          type: 'UPDATE_NETWORK_TARGET',
+          type: 'UPDATE_ACTIVE_NETWORK',
           value: {
             rpcUrl: 'newRpc',
             networkConfigurationId: 'networkConfigurationId',

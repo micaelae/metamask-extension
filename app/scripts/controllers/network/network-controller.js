@@ -34,7 +34,7 @@ import createJsonRpcClient from './createJsonRpcClient';
  * @property {string} chainName - Personalized network name.
  * @property {string} ticker - Currency ticker.
  * @property {object} rpcPrefs - Personalized preferences.
- * @property {object} networkConfigurationId - A unique id that is used to key each config in the NetworkConfigurations.
+ * @property {string} networkConfigurationId - A unique id that is used to key each config in the NetworkConfigurations.
  */
 
 const env = process.env.METAMASK_ENV;

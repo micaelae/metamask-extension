@@ -3807,7 +3807,7 @@ export function updateNetworkTarget(
   networkConfigurationId: string,
 ) {
   return {
-    type: actionConstants.UPDATE_NETWORK_TARGET,
+    type: actionConstants.UPDATE_ACTIVE_NETWORK,
     value: { rpcUrl, networkConfigurationId },
   };
 }

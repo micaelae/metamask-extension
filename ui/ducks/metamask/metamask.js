@@ -82,7 +82,7 @@ export default function reduceMetamask(state = initialState, action) {
         isUnlocked: false,
       };
 
-    case actionConstants.UPDATE_NETWORK_TARGET: {
+    case actionConstants.UPDATE_ACTIVE_NETWORK: {
       const { networkConfigurationId, rpcUrl } = action.value;
       return {
         ...metamaskState,

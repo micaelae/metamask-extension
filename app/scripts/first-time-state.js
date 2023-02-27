@@ -11,7 +11,7 @@ const initialState = {
   config: {},
   NetworkController: {
     networkConfigurations: {
-      uuid: {
+      localhostNetworkConfigurationId: {
         rpcUrl: 'http://localhost:8545',
         chainId: '0x539',
         ticker: 'ETH',

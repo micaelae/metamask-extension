@@ -132,7 +132,7 @@ describe('MetaMask Reducers', () => {
     const state = reduceMetamask(
       {},
       {
-        type: actionConstants.UPDATE_NETWORK_TARGET,
+        type: actionConstants.UPDATE_ACTIVE_NETWORK,
         value: {
           rpcUrl: 'https://custom.rpc',
           networkConfigurationId: 'test-networkConfigurationId',
