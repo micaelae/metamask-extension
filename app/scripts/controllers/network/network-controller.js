@@ -241,7 +241,7 @@ export default class NetworkController extends EventEmitter {
    * @param {string} networkConfigurationId - the universal unique identifier that corresponds to the network configuration we wish to set as selected.
    * @returns {Promise<string>} The rpcUrl of the network that was just set
    */
-  setCurrentNetwork(networkConfigurationId) {
+  setActiveNetwork(networkConfigurationId) {
     let id = networkConfigurationId;
     if (typeof networkConfigurationId === 'object') {
       id = networkConfigurationId.networkConfigurationId;
@@ -266,7 +266,7 @@ export default class NetworkController extends EventEmitter {
     assert.notStrictEqual(
       type,
       NETWORK_TYPES.RPC,
-      `NetworkController - cannot call "setProviderType" with type "${NETWORK_TYPES.RPC}". Use "setCurrentNetwork"`,
+      `NetworkController - cannot call "setProviderType" with type "${NETWORK_TYPES.RPC}". Use "setActiveNetwork"`,
     );
     assert.ok(
       INFURA_PROVIDER_TYPES.includes(type),

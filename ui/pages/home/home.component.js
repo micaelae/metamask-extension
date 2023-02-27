@@ -146,7 +146,7 @@ export default class Home extends PureComponent {
     setNewTokensImported: PropTypes.func.isRequired,
     newNetworkAddedConfigurationId: PropTypes.string,
     clearNewNetworkAdded: PropTypes.func,
-    setCurrentNetwork: PropTypes.func,
+    setActiveNetwork: PropTypes.func,
     onboardedInThisUISession: PropTypes.bool,
   };
 
@@ -276,7 +276,7 @@ export default class Home extends PureComponent {
       setNewTokensImported,
       newNetworkAddedConfigurationId,
       clearNewNetworkAdded,
-      setCurrentNetwork,
+      setActiveNetwork,
     } = this.props;
 
     const onAutoHide = () => {
@@ -524,7 +524,7 @@ export default class Home extends PureComponent {
                 type="primary"
                 className="home__new-network-added__switch-to-button"
                 onClick={() => {
-                  setCurrentNetwork(newNetworkAddedConfigurationId);
+                  setActiveNetwork(newNetworkAddedConfigurationId);
                   clearNewNetworkAdded();
                 }}
               >

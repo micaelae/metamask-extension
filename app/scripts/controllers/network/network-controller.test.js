@@ -915,7 +915,7 @@ describe('NetworkController', () => {
             });
             expect(oldChainIdResult).toBe('0x5');
 
-            controller.setCurrentNetwork('testNetworkConfigurationId');
+            controller.setActiveNetwork('testNetworkConfigurationId');
             const promisifiedSendAsync2 = promisify(provider.sendAsync).bind(
               provider,
             );
@@ -1331,7 +1331,7 @@ describe('NetworkController', () => {
                             controller,
                             eventName: 'networkDidChange',
                             operation: () => {
-                              controller.setCurrentNetwork(
+                              controller.setActiveNetwork(
                                 'testNetworkConfigurationId',
                               );
                             },
@@ -2244,7 +2244,7 @@ describe('NetworkController', () => {
                       controller,
                       propertyPath: ['network'],
                       operation: () => {
-                        controller.setCurrentNetwork(
+                        controller.setActiveNetwork(
                           'testNetworkConfigurationId',
                         );
                       },
@@ -2323,7 +2323,7 @@ describe('NetworkController', () => {
                       controller,
                       propertyPath: ['networkDetails'],
                       operation: () => {
-                        controller.setCurrentNetwork(
+                        controller.setActiveNetwork(
                           'testNetworkConfigurationId',
                         );
                       },
@@ -2370,7 +2370,7 @@ describe('NetworkController', () => {
     });
   });
 
-  describe('setCurrentNetwork', () => {
+  describe('setActiveNetwork', () => {
     it('throws if the given networkConfigurationId does not match one in networkConfigurations', async () => {
       await withController(
         {
@@ -2393,7 +2393,7 @@ describe('NetworkController', () => {
           network.mockEssentialRpcCalls();
 
           expect(() =>
-            controller.setCurrentNetwork('invalid-network-configuration-id'),
+            controller.setActiveNetwork('invalid-network-configuration-id'),
           ).toThrow(
             new Error(
               'networkConfigurationId invalid-network-configuration-id does not match a configured networkConfiguration',
@@ -2436,7 +2436,7 @@ describe('NetworkController', () => {
           });
           network.mockEssentialRpcCalls();
 
-          controller.setCurrentNetwork('testNetworkConfigurationId');
+          controller.setActiveNetwork('testNetworkConfigurationId');
 
           expect(
             controller.store.getState().previousProviderStore,
@@ -2483,7 +2483,7 @@ describe('NetworkController', () => {
           });
           network.mockEssentialRpcCalls();
 
-          controller.setCurrentNetwork('testNetworkConfigurationId');
+          controller.setActiveNetwork('testNetworkConfigurationId');
 
           expect(controller.store.getState().provider).toStrictEqual({
             rpcUrl: 'https://mock-rpc-url',
@@ -2556,7 +2556,7 @@ describe('NetworkController', () => {
             controller,
             eventName: 'networkWillChange',
             operation: () => {
-              controller.setCurrentNetwork('testNetworkConfigurationId');
+              controller.setActiveNetwork('testNetworkConfigurationId');
             },
             beforeResolving: () => {
               expect(controller.store.getState().network).toBe(initialNetwork);
@@ -2622,7 +2622,7 @@ describe('NetworkController', () => {
             // before networkDidChange
             count: 1,
             operation: () => {
-              controller.setCurrentNetwork('testNetworkConfigurationId');
+              controller.setActiveNetwork('testNetworkConfigurationId');
             },
           });
           expect(controller.store.getState().network).toBe('loading');
@@ -2681,7 +2681,7 @@ describe('NetworkController', () => {
             // before networkDidChange
             count: 1,
             operation: () => {
-              controller.setCurrentNetwork('testNetworkConfigurationId');
+              controller.setActiveNetwork('testNetworkConfigurationId');
             },
           });
           expect(controller.store.getState().networkDetails).toStrictEqual({
@@ -2729,7 +2729,7 @@ describe('NetworkController', () => {
             },
           });
 
-          controller.setCurrentNetwork('testNetworkConfigurationId');
+          controller.setActiveNetwork('testNetworkConfigurationId');
 
           const { provider } = controller.getProviderAndBlockTracker();
           const promisifiedSendAsync = promisify(provider.sendAsync).bind(
@@ -2780,7 +2780,7 @@ describe('NetworkController', () => {
 
           const { provider: providerBefore } =
             controller.getProviderAndBlockTracker();
-          controller.setCurrentNetwork('testNetworkConfigurationId');
+          controller.setActiveNetwork('testNetworkConfigurationId');
           const { provider: providerAfter } =
             controller.getProviderAndBlockTracker();
 
@@ -2820,7 +2820,7 @@ describe('NetworkController', () => {
             controller,
             eventName: 'networkDidChange',
             operation: () => {
-              controller.setCurrentNetwork('testNetworkConfigurationId');
+              controller.setActiveNetwork('testNetworkConfigurationId');
             },
           });
 
@@ -2860,7 +2860,7 @@ describe('NetworkController', () => {
             controller,
             eventName: 'infuraIsUnblocked',
             operation: () => {
-              controller.setCurrentNetwork('testNetworkConfigurationId');
+              controller.setActiveNetwork('testNetworkConfigurationId');
             },
           });
 
@@ -2906,7 +2906,7 @@ describe('NetworkController', () => {
             controller,
             propertyPath: ['network'],
             operation: () => {
-              controller.setCurrentNetwork('testNetworkConfigurationId');
+              controller.setActiveNetwork('testNetworkConfigurationId');
             },
           });
 
@@ -2952,7 +2952,7 @@ describe('NetworkController', () => {
             propertyPath: ['networkDetails'],
             count: 2,
             operation: () => {
-              controller.setCurrentNetwork('testNetworkConfigurationId');
+              controller.setActiveNetwork('testNetworkConfigurationId');
             },
           });
 
@@ -3317,7 +3317,7 @@ describe('NetworkController', () => {
         await withController(async ({ controller }) => {
           expect(() => controller.setProviderType('rpc')).toThrow(
             new Error(
-              'NetworkController - cannot call "setProviderType" with type "rpc". Use "setCurrentNetwork"',
+              'NetworkController - cannot call "setProviderType" with type "rpc". Use "setActiveNetwork"',
             ),
           );
         });
@@ -3963,7 +3963,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
               expect(controller.store.getState().provider).toStrictEqual({
@@ -4032,7 +4032,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
 
@@ -4102,7 +4102,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
               expect(controller.store.getState().network).toBe('255');
@@ -4171,7 +4171,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
               expect(controller.store.getState().networkDetails).toStrictEqual({
@@ -4247,7 +4247,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
 
@@ -4311,7 +4311,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
 
@@ -4373,7 +4373,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
 
@@ -4436,7 +4436,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
 
@@ -4506,7 +4506,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
               expect(controller.store.getState().network).toBe('255');
@@ -4569,7 +4569,7 @@ describe('NetworkController', () => {
               await waitForLookupNetworkToComplete({
                 controller,
                 operation: () => {
-                  controller.setCurrentNetwork('testNetworkConfigurationId');
+                  controller.setActiveNetwork('testNetworkConfigurationId');
                 },
               });
               expect(

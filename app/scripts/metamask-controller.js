@@ -1823,8 +1823,8 @@ export default class MetamaskController extends EventEmitter {
         networkController.rollbackToPreviousProvider.bind(networkController),
       removeNetworkConfiguration:
         networkController.removeNetworkConfiguration.bind(networkController),
-      setCurrentNetwork:
-        networkController.setCurrentNetwork.bind(networkController),
+      setActiveNetwork:
+        networkController.setActiveNetwork.bind(networkController),
       getNetworkConfigurations:
         networkController.getNetworkConfigurations.bind(networkController),
       upsertAndSetNetworkConfiguration:
@@ -4010,7 +4010,7 @@ export default class MetamaskController extends EventEmitter {
           this.networkController.store.getState().provider.rpcUrl,
         // network configuration-related
         upsertNetworkConfiguration: this.upsertNetworkConfiguration.bind(this),
-        setCurrentNetwork: this.networkController.setCurrentNetwork.bind(
+        setActiveNetwork: this.networkController.setActiveNetwork.bind(
           this.networkController,
         ),
         getNetworkConfigurations:
@@ -4410,7 +4410,7 @@ export default class MetamaskController extends EventEmitter {
       rpcPrefs,
     });
 
-    await this.networkController.setCurrentNetwork(networkConfigurationId);
+    await this.networkController.setActiveNetwork(networkConfigurationId);
 
     return networkConfigurationId;
   }

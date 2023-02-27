@@ -20,7 +20,7 @@ const switchEthereumChain = {
     getCurrentChainId: true,
     findNetworkConfigurationBy: true,
     setProviderType: true,
-    setCurrentNetwork: true,
+    setActiveNetwork: true,
     requestUserApproval: true,
   },
 };
@@ -49,7 +49,7 @@ async function switchEthereumChainHandler(
     getCurrentChainId,
     findNetworkConfigurationBy,
     setProviderType,
-    setCurrentNetwork,
+    setActiveNetwork,
     requestUserApproval,
   },
 ) {
@@ -68,7 +68,7 @@ async function switchEthereumChainHandler(
   const { chainId, networkConfigurationId } = req.params[0];
 
   if (networkConfigurationId) {
-    await setCurrentNetwork(networkConfigurationId);
+    await setActiveNetwork(networkConfigurationId);
     return end();
   }
 
@@ -119,7 +119,7 @@ async function switchEthereumChainHandler(
       ) {
         setProviderType(approvedRequestData.type);
       } else {
-        await setCurrentNetwork(approvedRequestData);
+        await setActiveNetwork(approvedRequestData);
       }
       res.result = null;
     } catch (error) {

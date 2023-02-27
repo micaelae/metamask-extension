@@ -2547,13 +2547,13 @@ export function editAndSetNetworkConfiguration({
   };
 }
 
-export function setCurrentNetwork(
+export function setActiveNetwork(
   networkConfigurationId: string,
 ): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
   return async (dispatch) => {
-    log.debug(`background.setCurrentNetwork: ${networkConfigurationId}`);
+    log.debug(`background.setActiveNetwork: ${networkConfigurationId}`);
     try {
-      await submitRequestToBackground('setCurrentNetwork', [
+      await submitRequestToBackground('setActiveNetwork', [
         networkConfigurationId,
       ]);
     } catch (error) {

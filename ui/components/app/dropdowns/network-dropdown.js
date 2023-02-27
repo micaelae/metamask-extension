@@ -62,8 +62,8 @@ function mapDispatchToProps(dispatch) {
     setProviderType: (type) => {
       dispatch(actions.setProviderType(type));
     },
-    setCurrentNetwork: (networkConfigurationId) => {
-      dispatch(actions.setCurrentNetwork(networkConfigurationId));
+    setActiveNetwork: (networkConfigurationId) => {
+      dispatch(actions.setActiveNetwork(networkConfigurationId));
     },
     hideNetworkDropdown: () => dispatch(actions.hideNetworkDropdown()),
     displayInvalidCustomNetworkAlert: (networkName) => {
@@ -96,7 +96,7 @@ class NetworkDropdown extends Component {
       ticker: PropTypes.string,
     }).isRequired,
     setProviderType: PropTypes.func.isRequired,
-    setCurrentNetwork: PropTypes.func.isRequired,
+    setActiveNetwork: PropTypes.func.isRequired,
     hideNetworkDropdown: PropTypes.func.isRequired,
     networkConfigurations: PropTypes.object.isRequired,
     shouldShowTestNetworks: PropTypes.bool,
@@ -166,7 +166,7 @@ class NetworkDropdown extends Component {
             closeMenu={() => this.props.hideNetworkDropdown()}
             onClick={() => {
               if (isPrefixedFormattedHexString(chainId)) {
-                this.props.setCurrentNetwork(networkConfigurationId);
+                this.props.setActiveNetwork(networkConfigurationId);
               } else {
                 this.props.displayInvalidCustomNetworkAlert(
                   chainName || rpcUrl,
