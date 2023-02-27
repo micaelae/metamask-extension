@@ -22,29 +22,38 @@ export default {
 function transformState(state) {
   const { PreferencesController, NetworkController } = state || {};
 
-  if (!PreferencesController?.frequentRpcListDetail) {
-    return state;
+  if (
+    !PreferencesController ||
+    PreferencesController.frequentRpcListDetail === undefined
+  ) {
+    return {
+      ...state,
+      NetworkController: {
+        ...NetworkController,
+        networkConfigurations: {
+          ...NetworkController?.networkConfigurations,
+        },
+      },
+    };
   }
 
   const { frequentRpcListDetail = [] } = PreferencesController || {};
 
   const networkConfigurations = {};
-  frequentRpcListDetail.forEach((rpcDetail) => {
-    const networkConfigurationId = v4();
-    if (networkConfigurations[networkConfigurationId] === undefined) {
-      networkConfigurations[networkConfigurationId] = {};
-    }
-    networkConfigurations[networkConfigurationId] = {
-      ...rpcDetail,
-      chainName: rpcDetail.nickname,
-    };
+  frequentRpcListDetail.forEach(
+    ({ rpcUrl, chainId, ticker, nickname, rpcPrefs }) => {
+      const networkConfigurationId = v4();
+      networkConfigurations[networkConfigurationId] = {
+        rpcUrl,
+        chainId,
+        ticker,
+        rpcPrefs,
+        chainName: nickname,
+      };
+    },
+  );
 
-    delete networkConfigurations[networkConfigurationId]?.nickname;
-  });
-
-  if (PreferencesController?.frequentRpcListDetail) {
-    delete PreferencesController.frequentRpcListDetail;
-  }
+  delete PreferencesController.frequentRpcListDetail;
 
   return {
     ...state,

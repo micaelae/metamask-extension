@@ -457,4 +457,73 @@ describe('migration #81', () => {
       },
     });
   });
+  it('should add a networkConfigurations property set to an empty object to NetworkController if PreferencesController is undefined', async () => {
+    const oldStorage = {
+      meta: {
+        version: 80,
+      },
+      data: {
+        NetworkController: {
+          network: '1',
+          networkDetails: {
+            EIPS: {
+              1559: true,
+            },
+          },
+          previousProviderStore: {
+            chainId: '0x89',
+            nickname: 'Polygon Mainnet',
+            rpcPrefs: {},
+            rpcUrl:
+              'https://polygon-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
+            ticker: 'MATIC',
+            type: 'rpc',
+          },
+          provider: {
+            chainId: '0x1',
+            nickname: '',
+            rpcPrefs: {},
+            rpcUrl: '',
+            ticker: 'ETH',
+            type: 'mainnet',
+          },
+        },
+      },
+    };
+    const newStorage = await migration81.migrate(oldStorage);
+    expect(newStorage).toStrictEqual({
+      meta: {
+        version: 81,
+      },
+      data: {
+
+        NetworkController: {
+          network: '1',
+          networkDetails: {
+            EIPS: {
+              1559: true,
+            },
+          },
+          previousProviderStore: {
+            chainId: '0x89',
+            nickname: 'Polygon Mainnet',
+            rpcPrefs: {},
+            rpcUrl:
+              'https://polygon-mainnet.infura.io/v3/373266a93aab4acda48f89d4fe77c748',
+            ticker: 'MATIC',
+            type: 'rpc',
+          },
+          provider: {
+            chainId: '0x1',
+            nickname: '',
+            rpcPrefs: {},
+            rpcUrl: '',
+            ticker: 'ETH',
+            type: 'mainnet',
+          },
+          networkConfigurations: {},
+        },
+      },
+    });
+  });
 });
