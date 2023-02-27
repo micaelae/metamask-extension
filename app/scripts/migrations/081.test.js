@@ -496,7 +496,6 @@ describe('migration #81', () => {
         version: 81,
       },
       data: {
-
         NetworkController: {
           network: '1',
           networkDetails: {
