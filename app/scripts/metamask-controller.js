@@ -5,7 +5,7 @@ import { storeAsStream } from '@metamask/obs-store/dist/asStream';
 import { JsonRpcEngine } from 'json-rpc-engine';
 import { createEngineStream } from 'json-rpc-middleware-stream';
 import { providerAsMiddleware } from '@metamask/eth-json-rpc-middleware';
-import { debounce, pickBy } from 'lodash';
+import { debounce } from 'lodash';
 import {
   KeyringController,
   keyringBuilderFactory,
@@ -965,8 +965,8 @@ export default class MetamaskController extends EventEmitter {
         const txMeta = this.txController.txStateManager.getTransaction(txId);
         let rpcPrefs = {};
         if (txMeta.chainId) {
-          const networkConfigurations =
-            this.networkController.getNetworkConfigurations();
+          const { networkConfigurations } =
+            this.networkController.store.getState();
           let matchingNetworkConfig;
           for (const networkConfiguration of Object.values(
             networkConfigurations,
@@ -1827,8 +1827,6 @@ export default class MetamaskController extends EventEmitter {
         networkController.removeNetworkConfiguration.bind(networkController),
       setActiveNetwork:
         networkController.setActiveNetwork.bind(networkController),
-      getNetworkConfigurations:
-        networkController.getNetworkConfigurations.bind(networkController),
       upsertAndSetActiveNetwork: this.upsertAndSetActiveNetwork.bind(this),
       upsertNetworkConfiguration: this.upsertNetworkConfiguration.bind(this),
       requestAddNetworkApproval: this.requestAddNetworkApproval.bind(this),
@@ -4010,14 +4008,12 @@ export default class MetamaskController extends EventEmitter {
         getCurrentRpcUrl:
           this.networkController.store.getState().provider.rpcUrl,
         // network configuration-related
+        getNetworkConfigurations:
+          this.networkController.store.getState().networkConfigurations,
         upsertNetworkConfiguration: this.upsertNetworkConfiguration.bind(this),
         setActiveNetwork: this.networkController.setActiveNetwork.bind(
           this.networkController,
         ),
-        getNetworkConfigurations:
-          this.networkController.getNetworkConfigurations.bind(
-            this.networkController,
-          ),
         findNetworkConfigurationBy: this.findNetworkConfigurationBy.bind(this),
         setProviderType: this.networkController.setProviderType.bind(
           this.networkController,
@@ -4424,20 +4420,13 @@ export default class MetamaskController extends EventEmitter {
    * @returns {object} rpcInfo found in the network configurations list
    */
   findNetworkConfigurationBy(rpcInfo) {
-    const networkConfigurations =
-      this.networkController.getNetworkConfigurations();
-    return (
-      Object.values(
-        pickBy(networkConfigurations, (config) => {
-          for (const key of Object.keys(rpcInfo)) {
-            if (config[key] === rpcInfo[key]) {
-              return config;
-            }
-          }
-          return undefined;
-        }),
-      )?.[0] || null
-    );
+    const { networkConfigurations } = this.networkController.store.getState();
+
+    return Object.values(networkConfigurations).find((networkConfiguration) => {
+      return Object.keys(rpcInfo).some((key) => {
+        return networkConfiguration[key] === rpcInfo[key];
+      });
+    });
   }
 
   /**
