@@ -521,6 +521,7 @@ export default class NetworkController extends EventEmitter {
       ticker,
       chainName,
       rpcPrefs,
+      networkConfigurationId: random(),
     };
 
     for (const [networkConfigurationId, networkConfiguration] of Object.entries(
@@ -535,11 +536,12 @@ export default class NetworkController extends EventEmitter {
       }
     }
 
-    const networkConfigurationId = random();
-    networkConfigurations[networkConfigurationId] = newNetworkConfiguration;
-    this.networkConfigurations.updateState(networkConfigurations);
+    this.networkConfigurations.updateState({
+      ...networkConfigurations,
+      [newNetworkConfiguration.networkConfigurationId]: newNetworkConfiguration,
+    });
 
-    return networkConfigurationId;
+    return newNetworkConfiguration.networkConfigurationId;
   }
 
   /**
