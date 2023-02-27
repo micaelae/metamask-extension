@@ -1,15 +1,26 @@
 import { inspect, isDeepStrictEqual, promisify } from 'util';
 import { isMatch } from 'lodash';
+import { v4 } from 'uuid';
 import nock from 'nock';
 import sinon from 'sinon';
 import * as ethJsonRpcMiddlewareModule from '@metamask/eth-json-rpc-middleware';
 import { BUILT_IN_NETWORKS } from '../../../../shared/constants/network';
 import NetworkController from './network-controller';
 
+
 jest.mock('@metamask/eth-json-rpc-middleware', () => {
   return {
     __esModule: true,
     ...jest.requireActual('@metamask/eth-json-rpc-middleware'),
+  };
+});
+
+jest.mock('uuid', () => {
+  const actual = jest.requireActual('uuid');
+
+  return {
+    ...actual,
+    v4: jest.fn(),
   };
 });
 
@@ -2494,6 +2505,7 @@ describe('NetworkController', () => {
               blockExplorerUrl: 'test-block-explorer.com',
             },
             type: 'rpc',
+            networkConfigurationId: 'testNetworkConfigurationId',
           });
         },
       );
@@ -3972,6 +3984,7 @@ describe('NetworkController', () => {
                 type: 'rpc',
                 chainName: 'test-chain',
                 ticker: 'TEST',
+                networkConfigurationId: 'testNetworkConfigurationId',
               });
 
               await waitForLookupNetworkToComplete({
@@ -3986,6 +3999,7 @@ describe('NetworkController', () => {
                 chainId: '0x999',
                 ticker: 'ETH',
                 chainName: '',
+                networkConfigurationId: 'testNetworkConfigurationId',
               });
             },
           );
@@ -5104,6 +5118,7 @@ describe('NetworkController', () => {
   });
   describe('upsertNetworkConfiguration', () => {
     it('should add the given network configuration if its rpcURL does not match an existing configuration', async () => {
+      v4.mockImplementationOnce(() => 'network-configuration-id-1')
       await withController(
         {
           state: {
@@ -5117,6 +5132,7 @@ describe('NetworkController', () => {
             rpcPrefs: undefined,
             rpcUrl: 'rpc_url',
             ticker: 'RPC',
+            networkConfigurationId: 'network-configuration-id-1',
           };
 
           expect(controller.networkConfigurations.getState()).toStrictEqual({});
