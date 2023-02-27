@@ -1186,13 +1186,13 @@ const state = {
       },
     ],
     networkConfigurations: {
-      'test-uuid-1': {
+      'test-networkConfigurationId-1': {
         rpcUrl: 'https://testrpc.com',
         chainId: '0x1',
         chainName: 'mainnet',
         rpcPrefs: { blockExplorerUrl: 'https://etherscan.io' },
       },
-      'test-uuid-2': {
+      'test-networkConfigurationId-2': {
         rpcUrl: 'http://localhost:8545',
         chainId: '0x539',
         ticker: 'ETH',
