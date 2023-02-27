@@ -256,6 +256,7 @@ export default class NetworkController extends EventEmitter {
 
     this._setProviderConfig({
       type: NETWORK_TYPES.RPC,
+      networkConfigurationId: id,
       ...targetNetwork,
     });
 

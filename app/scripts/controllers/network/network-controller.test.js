@@ -5103,7 +5103,7 @@ describe('NetworkController', () => {
     });
   });
   describe('upsertNetworkConfiguration', () => {
-    it('should add a network configuration', async () => {
+    it('should add the given network configuration if its rpcURL does not match an existing configuration', async () => {
       await withController(
         {
           state: {
@@ -5130,7 +5130,7 @@ describe('NetworkController', () => {
       );
     });
 
-    it('should update a network configuration when the configuration being added has an rpcURL that matches an existing configuration', async () => {
+    it('should use the given configuration to update an existing network configuration that matches has a matching rpcUrl', async () => {
       await withController(
         {
           state: {
