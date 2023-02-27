@@ -934,15 +934,15 @@ describe('MetaMetricsController', function () {
         },
         allTokens: MOCK_ALL_TOKENS,
         networkConfigurations: {
-          'test-uuid-1': {
+          'network-configuration-id-1': {
             chainId: CHAIN_IDS.MAINNET,
             ticker: CURRENCY_SYMBOLS.ETH,
           },
-          'test-uuid-2': {
+          'network-configuration-id-2': {
             chainId: CHAIN_IDS.GOERLI,
             ticker: CURRENCY_SYMBOLS.TEST_ETH,
           },
-          'test-uuid-3': { chainId: '0xaf' },
+          'network-configuration-id-3': { chainId: '0xaf' },
         },
         identities: [{}, {}],
         ledgerTransportType: 'web-hid',
@@ -979,8 +979,8 @@ describe('MetaMetricsController', function () {
         },
         allTokens: {},
         networkConfigurations: {
-          'test-uuid-1': { chainId: CHAIN_IDS.MAINNET },
-          'test-uuid-2': { chainId: CHAIN_IDS.GOERLI },
+          'network-configuration-id-1': { chainId: CHAIN_IDS.MAINNET },
+          'network-configuration-id-2': { chainId: CHAIN_IDS.GOERLI },
         },
         ledgerTransportType: 'web-hid',
         openSeaEnabled: true,
@@ -999,8 +999,8 @@ describe('MetaMetricsController', function () {
           '0x1': { '0xabcde': [{ '0x12345': { address: '0xtestAddress' } }] },
         },
         networkConfigurations: {
-          'test-uuid-1': { chainId: CHAIN_IDS.MAINNET },
-          'test-uuid-2': { chainId: CHAIN_IDS.GOERLI },
+          'network-configuration-id-1': { chainId: CHAIN_IDS.MAINNET },
+          'network-configuration-id-2': { chainId: CHAIN_IDS.GOERLI },
         },
         ledgerTransportType: 'web-hid',
         openSeaEnabled: false,
@@ -1027,8 +1027,8 @@ describe('MetaMetricsController', function () {
         },
         allTokens: {},
         networkConfigurations: {
-          'test-uuid-1': { chainId: CHAIN_IDS.MAINNET },
-          'test-uuid-2': { chainId: CHAIN_IDS.GOERLI },
+          'network-configuration-id-1': { chainId: CHAIN_IDS.MAINNET },
+          'network-configuration-id-2': { chainId: CHAIN_IDS.GOERLI },
         },
         ledgerTransportType: 'web-hid',
         openSeaEnabled: true,
@@ -1045,8 +1045,8 @@ describe('MetaMetricsController', function () {
         },
         allTokens: {},
         networkConfigurations: {
-          'test-uuid-1': { chainId: CHAIN_IDS.MAINNET },
-          'test-uuid-2': { chainId: CHAIN_IDS.GOERLI },
+          'network-configuration-id-1': { chainId: CHAIN_IDS.MAINNET },
+          'network-configuration-id-2': { chainId: CHAIN_IDS.GOERLI },
         },
         ledgerTransportType: 'web-hid',
         openSeaEnabled: true,

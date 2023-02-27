@@ -34,6 +34,7 @@ import createJsonRpcClient from './createJsonRpcClient';
  * @property {string} chainName - Personalized network name.
  * @property {string} ticker - Currency ticker.
  * @property {object} rpcPrefs - Personalized preferences.
+ * @property {object} networkConfigurationId - A unique id that is used to key each config in the NetworkConfigurations.
  */
 
 const env = process.env.METAMASK_ENV;
@@ -238,8 +239,8 @@ export default class NetworkController extends EventEmitter {
   /**
    * A method for setting the currently selected network provider by networkConfigurationId.
    *
-   * @param {string} networkConfigurationId - the universal unique identifier that corresponds to the network configuration we wish to set as selected.
-   * @returns {Promise<string>} The rpcUrl of the network that was just set
+   * @param {string} networkConfigurationId - the universal unique identifier that corresponds to the network configuration to set as active.
+   * @returns {Promise<string>} The rpcUrl of the network that was just set as active
    */
   setActiveNetwork(networkConfigurationId) {
     let id = networkConfigurationId;
@@ -522,7 +523,6 @@ export default class NetworkController extends EventEmitter {
       ticker,
       chainName,
       rpcPrefs,
-      networkConfigurationId: random(),
     };
 
     for (const [networkConfigurationId, networkConfiguration] of Object.entries(
@@ -531,18 +531,24 @@ export default class NetworkController extends EventEmitter {
       if (
         networkConfiguration.rpcUrl?.toLowerCase() === rpcUrl?.toLowerCase()
       ) {
-        networkConfigurations[networkConfigurationId] = newNetworkConfiguration;
-        this.networkConfigurations.updateState(networkConfigurations);
+        this.networkConfigurations.updateState({
+          ...networkConfigurations,
+          [networkConfigurationId]: newNetworkConfiguration,
+        });
         return networkConfigurationId;
       }
     }
 
+    const newNetworkConfigurationId = random();
     this.networkConfigurations.updateState({
       ...networkConfigurations,
-      [newNetworkConfiguration.networkConfigurationId]: newNetworkConfiguration,
+      [newNetworkConfigurationId]: {
+        ...newNetworkConfiguration,
+        networkConfigurationId: newNetworkConfigurationId,
+      },
     });
 
-    return newNetworkConfiguration.networkConfigurationId;
+    return newNetworkConfigurationId;
   }
 
   /**
@@ -554,14 +560,5 @@ export default class NetworkController extends EventEmitter {
     const networkConfigurations = this.networkConfigurations.getState();
     delete networkConfigurations[networkConfigurationId];
     this.networkConfigurations.updateState(networkConfigurations);
-  }
-
-  /**
-   * Getter for the NetworkConfigurations
-   *
-   * @returns {Object<string, NetworkConfiguration>} An object of network configurations.
-   */
-  getNetworkConfigurations() {
-    return this.networkConfigurations.getState();
   }
 }

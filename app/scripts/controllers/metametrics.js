@@ -692,14 +692,14 @@ export default class MetaMetricsController {
       [TRAITS.LEDGER_CONNECTION_TYPE]: metamaskState.ledgerTransportType,
       [TRAITS.NETWORKS_ADDED]: Object.values(
         metamaskState.networkConfigurations,
-      ).map((rpc) => rpc.chainId),
+      ).map((networkConfiguration) => networkConfiguration.chainId),
       [TRAITS.NETWORKS_WITHOUT_TICKER]: Object.values(
         metamaskState.networkConfigurations,
-      ).reduce((networkList, currentNetwork) => {
+      ).reduce((networkConfigurations, currentNetwork) => {
         if (!currentNetwork.ticker) {
-          networkList.push(currentNetwork.chainId);
+          networkConfigurations.push(currentNetwork.chainId);
         }
-        return networkList;
+        return networkConfigurations;
       }, []),
       [TRAITS.NFT_AUTODETECTION_ENABLED]: metamaskState.useNftDetection,
       [TRAITS.NUMBER_OF_ACCOUNTS]: Object.values(metamaskState.identities)
