@@ -968,9 +968,9 @@ export default class MetamaskController extends EventEmitter {
           const networkConfigurations =
             this.networkController.getNetworkConfigurations();
           let matchingNetworkConfig;
-          for (const networkConfig of Object.values(networkConfigurations)) {
-            if (networkConfig.chainId === txMeta.chainId) {
-              matchingNetworkConfig = networkConfig;
+          for (const networkConfiguration of Object.values(networkConfigurations)) {
+            if (networkConfiguration.chainId === txMeta.chainId) {
+              matchingNetworkConfig = networkConfiguration;
             }
           }
           rpcPrefs = matchingNetworkConfig?.rpcPrefs ?? {};
