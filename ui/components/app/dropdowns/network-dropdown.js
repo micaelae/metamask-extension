@@ -180,41 +180,41 @@ class NetworkDropdown extends Component {
             }}
           >
             {isCurrentRpcTarget ? (
-            <Icon name={ICON_NAMES.CHECK} color={IconColor.successDefault} />
-          ) : (
-            <div className="network-check__transparent">✓</div>
-          )}
-          <ColorIndicator
-            color={opts.isLocalHost ? 'localhost' : IconColor.iconMuted}
-            size={Size.LG}
-            type={ColorIndicator.TYPES.FILLED}
-          />
-          <span
-            className="network-name-item"
-            data-testid={`${chainName}-network-item`}
-            style={{
-              color: isCurrentRpcTarget
-                ? 'var(--color-text-default)'
-                : 'var(--color-text-alternative)',
-            }}
-          >
-            {chainName || rpcUrl}
-          </span>
-          {isCurrentRpcTarget && (
-            <ButtonIcon
-              className="delete"
-              iconName={ICON_NAMES.CLOSE}
-              size={ICON_SIZES.SM}
-              ariaLabel={this.context.t('delete')}
-              onClick={(e) => {
-                e.stopPropagation();
-                this.props.showConfirmDeleteNetworkModal({
-                  target: rpcUrl,
-                  onConfirm: () => undefined,
-                });
-              }}
+              <Icon name={ICON_NAMES.CHECK} color={IconColor.successDefault} />
+            ) : (
+              <div className="network-check__transparent">✓</div>
+            )}
+            <ColorIndicator
+              color={opts.isLocalHost ? 'localhost' : IconColor.iconMuted}
+              size={Size.LG}
+              type={ColorIndicator.TYPES.FILLED}
             />
-          )}
+            <span
+              className="network-name-item"
+              data-testid={`${chainName}-network-item`}
+              style={{
+                color: isCurrentRpcTarget
+                  ? 'var(--color-text-default)'
+                  : 'var(--color-text-alternative)',
+              }}
+            >
+              {chainName || rpcUrl}
+            </span>
+            {isCurrentRpcTarget && (
+              <ButtonIcon
+                className="delete"
+                iconName={ICON_NAMES.CLOSE}
+                size={ICON_SIZES.SM}
+                ariaLabel={this.context.t('delete')}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  this.props.showConfirmDeleteNetworkModal({
+                    target: rpcUrl,
+                    onConfirm: () => undefined,
+                  });
+                }}
+              />
+            )}
           </DropdownMenuItem>
         );
       },
