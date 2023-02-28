@@ -243,7 +243,8 @@ export default class NetworkController extends EventEmitter {
    * @returns {string} The rpcUrl of the network that was just set as active
    */
   setActiveNetwork(networkConfigurationId) {
-    const targetNetwork = this.networkConfigurationsStore.getState()[id];
+    const targetNetwork =
+      this.networkConfigurationsStore.getState()[networkConfigurationId];
 
     if (!targetNetwork) {
       throw new Error(
@@ -503,7 +504,7 @@ export default class NetworkController extends EventEmitter {
    * Adds a network configuration if the rpcUrl is not already present on an
    * existing network configuration. Otherwise updates the entry with the matching rpcUrl.
    *
-   * @param {NetworkConfiguration} - The network configuration to add or, if rpcUrl matches an existing entry, to modify.
+   * @param {NetworkConfiguration} - - The network configuration to add or, if rpcUrl matches an existing entry, to modify.
    * @returns {string} networkConfigurationId for the added or updated network configuration
    */
   upsertNetworkConfiguration({ rpcUrl, chainId, ticker, chainName, rpcPrefs }) {

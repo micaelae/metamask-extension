@@ -5134,12 +5134,14 @@ describe('NetworkController', () => {
             networkConfigurationId: 'network-configuration-id-1',
           };
 
-          expect(controller.networkConfigurations.getState()).toStrictEqual({});
+          expect(
+            controller.store.getState().networkConfigurations,
+          ).toStrictEqual({});
 
           controller.upsertNetworkConfiguration(rpcUrlNetwork);
 
           expect(
-            Object.values(controller.networkConfigurations.getState()),
+            Object.values(controller.store.getState().networkConfigurations),
           ).toStrictEqual(expect.arrayContaining([rpcUrlNetwork]));
         },
       );
@@ -5169,7 +5171,7 @@ describe('NetworkController', () => {
             chainId: '1',
           });
           expect(
-            Object.values(controller.networkConfigurations.getState()),
+            Object.values(controller.store.getState().networkConfigurations),
           ).toStrictEqual([
             expect.objectContaining({
               rpcUrl: 'test_rpc_url',
@@ -5202,7 +5204,7 @@ describe('NetworkController', () => {
           },
           async ({ controller }) => {
             expect(
-              Object.values(controller.networkConfigurations.getState()),
+              Object.values(controller.store.getState().networkConfigurations),
             ).toStrictEqual([
               {
                 rpcUrl: 'test_rpc_url',
@@ -5213,9 +5215,9 @@ describe('NetworkController', () => {
               },
             ]);
             controller.removeNetworkConfiguration(networkConfigurationId);
-            expect(controller.networkConfigurations.getState()).toStrictEqual(
-              {},
-            );
+            expect(
+              controller.store.getState().networkConfigurations,
+            ).toStrictEqual({});
           },
         );
       });
