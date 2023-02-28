@@ -158,19 +158,19 @@ async function addEthereumChainHandler(
     // If this network is already added with but is not the currently selected network
     // Ask the user to switch the network
     try {
-      await setActiveNetwork(
-        await requestUserApproval({
-          origin,
-          type: MESSAGE_TYPE.SWITCH_ETHEREUM_CHAIN,
-          requestData: {
-            rpcUrl: existingNetwork.rpcUrl,
-            chainId: existingNetwork.chainId,
-            chainName: existingNetwork.chainName,
-            ticker: existingNetwork.ticker,
-            networkConfigurationId: existingNetwork.networkConfigurationId,
-          },
-        }),
-      );
+      const { networkConfigurationId } = await requestUserApproval({
+        origin,
+        type: MESSAGE_TYPE.SWITCH_ETHEREUM_CHAIN,
+        requestData: {
+          rpcUrl: existingNetwork.rpcUrl,
+          chainId: existingNetwork.chainId,
+          chainName: existingNetwork.chainName,
+          ticker: existingNetwork.ticker,
+          networkConfigurationId: existingNetwork.networkConfigurationId,
+        },
+      });
+
+      await setActiveNetwork(networkConfigurationId);
       res.result = null;
     } catch (error) {
       // For the purposes of this method, it does not matter if the user
@@ -302,19 +302,18 @@ async function addEthereumChainHandler(
 
   // Ask the user to switch the network
   try {
-    await setActiveNetwork(
-      await requestUserApproval({
-        origin,
-        type: MESSAGE_TYPE.SWITCH_ETHEREUM_CHAIN,
-        requestData: {
-          rpcUrl: firstValidRPCUrl,
-          chainId: _chainId,
-          chainName: _chainName,
-          ticker,
-          networkConfigurationId,
-        },
-      }),
-    );
+    await requestUserApproval({
+      origin,
+      type: MESSAGE_TYPE.SWITCH_ETHEREUM_CHAIN,
+      requestData: {
+        rpcUrl: firstValidRPCUrl,
+        chainId: _chainId,
+        chainName: _chainName,
+        ticker,
+        networkConfigurationId,
+      },
+    });
+    await setActiveNetwork(networkConfigurationId);
   } catch (error) {
     // For the purposes of this method, it does not matter if the user
     // declines to switch the selected network. However, other errors indicate

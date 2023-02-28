@@ -4005,10 +4005,10 @@ export default class MetamaskController extends EventEmitter {
 
         getCurrentChainId: () =>
           this.networkController.store.getState().provider.chainId,
-        getCurrentRpcUrl:
+        getCurrentRpcUrl: () =>
           this.networkController.store.getState().provider.rpcUrl,
         // network configuration-related
-        getNetworkConfigurations:
+        getNetworkConfigurations: () =>
           this.networkController.store.getState().networkConfigurations,
         upsertNetworkConfiguration: this.upsertNetworkConfiguration.bind(this),
         setActiveNetwork: this.networkController.setActiveNetwork.bind(

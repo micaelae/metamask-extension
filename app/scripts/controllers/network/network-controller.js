@@ -34,6 +34,7 @@ import createJsonRpcClient from './createJsonRpcClient';
  * @property {string} chainName - Personalized network name.
  * @property {string} ticker - Currency ticker.
  * @property {object} rpcPrefs - Personalized preferences.
+ * @property {string} [networkConfigurationId] - the unique identifier for this networkConfiguration.
  */
 
 const env = process.env.METAMASK_ENV;
@@ -239,13 +240,9 @@ export default class NetworkController extends EventEmitter {
    * A method for setting the currently selected network provider by networkConfigurationId.
    *
    * @param {string} networkConfigurationId - the universal unique identifier that corresponds to the network configuration to set as active.
-   * @returns {Promise<string>} The rpcUrl of the network that was just set as active
+   * @returns {string} The rpcUrl of the network that was just set as active
    */
   setActiveNetwork(networkConfigurationId) {
-    let id = networkConfigurationId;
-    if (typeof networkConfigurationId === 'object') {
-      id = networkConfigurationId.networkConfigurationId;
-    }
     const targetNetwork = this.networkConfigurationsStore.getState()[id];
 
     if (!targetNetwork) {
@@ -256,7 +253,7 @@ export default class NetworkController extends EventEmitter {
 
     this._setProviderConfig({
       type: NETWORK_TYPES.RPC,
-      networkConfigurationId: id,
+      networkConfigurationId,
       ...targetNetwork,
     });
 
@@ -506,8 +503,8 @@ export default class NetworkController extends EventEmitter {
    * Adds a network configuration if the rpcUrl is not already present on an
    * existing network configuration. Otherwise updates the entry with the matching rpcUrl.
    *
-   * @param {NetworkConfiguration} - The network configuration.
-   * @returns networkConfigurationId for the added or updated network configuration
+   * @param {NetworkConfiguration} - - The network configuration.
+   * @returns {string} networkConfigurationId for the added or updated network configuration
    */
   upsertNetworkConfiguration({ rpcUrl, chainId, ticker, chainName, rpcPrefs }) {
     const networkConfigurations = this.networkConfigurationsStore.getState();
@@ -548,7 +545,7 @@ export default class NetworkController extends EventEmitter {
   /**
    * Removes network configuration from state.
    *
-   * @param networkConfigurationId - the unique id for the network configuration to remove.
+   * @param {string} networkConfigurationId - the unique id for the network configuration to remove.
    */
   removeNetworkConfiguration(networkConfigurationId) {
     const networkConfigurations = this.networkConfigurationsStore.getState();
