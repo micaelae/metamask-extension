@@ -362,6 +362,7 @@ export default function ConfirmationPage({
               <Callout
                 key={alert.id}
                 severity={alert.severity}
+                dismiss={() => dismissAlert(alert.id)}
                 isFirst={idx === 0}
                 isLast={idx === filtered.length - 1}
                 isMultiple={filtered.length > 1}
@@ -377,12 +378,7 @@ export default function ConfirmationPage({
         loadingText={templatedValues.loadingText}
         loading={loading}
         submitAlerts={submitAlerts.map((alert, idx) => (
-          <Callout
-            key={alert.id}
-            severity={alert.severity}
-            dismiss={() => dismissAlert(alert.id)}
-            isFirst={idx === 0}
-          >
+          <Callout key={alert.id} severity={alert.severity} isFirst={idx === 0}>
             <MetaMaskTemplateRenderer sections={alert.content} />
           </Callout>
         ))}
