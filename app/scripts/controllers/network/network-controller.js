@@ -34,7 +34,6 @@ import createJsonRpcClient from './createJsonRpcClient';
  * @property {string} chainName - Personalized network name.
  * @property {string} ticker - Currency ticker.
  * @property {object} rpcPrefs - Personalized preferences.
- * @property {string} networkConfigurationId - A unique id that is used to key each config in the NetworkConfigurations.
  */
 
 const env = process.env.METAMASK_ENV;
@@ -113,7 +112,7 @@ export default class NetworkController extends EventEmitter {
       },
     );
 
-    this.networkConfigurations = new ObservableStore(
+    this.networkConfigurationsStore = new ObservableStore(
       state.networkConfigurations || {},
     );
     this.store = new ComposedStore({
@@ -121,7 +120,7 @@ export default class NetworkController extends EventEmitter {
       previousProviderStore: this.previousProviderStore,
       network: this.networkStore,
       networkDetails: this.networkDetails,
-      networkConfigurations: this.networkConfigurations,
+      networkConfigurations: this.networkConfigurationsStore,
     });
 
     // provider and block tracker
@@ -247,7 +246,7 @@ export default class NetworkController extends EventEmitter {
     if (typeof networkConfigurationId === 'object') {
       id = networkConfigurationId.networkConfigurationId;
     }
-    const targetNetwork = this.networkConfigurations.getState()[id];
+    const targetNetwork = this.networkConfigurationsStore.getState()[id];
 
     if (!targetNetwork) {
       throw new Error(
@@ -507,16 +506,11 @@ export default class NetworkController extends EventEmitter {
    * Adds a network configuration if the rpcUrl is not already present on an
    * existing network configuration. Otherwise updates the entry with the matching rpcUrl.
    *
-   * @param config - The network configuration.
-   * @param config.rpcUrl - The network configuration RPC URL.
-   * @param config.chainId - The chain ID of the network, as per EIP-155.
-   * @param config.ticker - Currency ticker.
-   * @param config.chainName - Personalized network name.
-   * @param config.rpcPrefs - Personalized preferences.
+   * @param {NetworkConfiguration} - The network configuration.
    * @returns networkConfigurationId for the added or updated network configuration
    */
   upsertNetworkConfiguration({ rpcUrl, chainId, ticker, chainName, rpcPrefs }) {
-    const networkConfigurations = this.networkConfigurations.getState();
+    const networkConfigurations = this.networkConfigurationsStore.getState();
     const newNetworkConfiguration = {
       rpcUrl,
       chainId,
@@ -531,7 +525,7 @@ export default class NetworkController extends EventEmitter {
       if (
         networkConfiguration.rpcUrl?.toLowerCase() === rpcUrl?.toLowerCase()
       ) {
-        this.networkConfigurations.updateState({
+        this.networkConfigurationsStore.updateState({
           ...networkConfigurations,
           [networkConfigurationId]: newNetworkConfiguration,
         });
@@ -540,7 +534,7 @@ export default class NetworkController extends EventEmitter {
     }
 
     const newNetworkConfigurationId = random();
-    this.networkConfigurations.updateState({
+    this.networkConfigurationsStore.updateState({
       ...networkConfigurations,
       [newNetworkConfigurationId]: {
         ...newNetworkConfiguration,
@@ -557,8 +551,8 @@ export default class NetworkController extends EventEmitter {
    * @param networkConfigurationId - the unique id for the network configuration to remove.
    */
   removeNetworkConfiguration(networkConfigurationId) {
-    const networkConfigurations = this.networkConfigurations.getState();
+    const networkConfigurations = this.networkConfigurationsStore.getState();
     delete networkConfigurations[networkConfigurationId];
-    this.networkConfigurations.updateState(networkConfigurations);
+    this.networkConfigurationsStore.updateState(networkConfigurations);
   }
 }

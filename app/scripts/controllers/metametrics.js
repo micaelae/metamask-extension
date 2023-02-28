@@ -695,12 +695,9 @@ export default class MetaMetricsController {
       ).map((networkConfiguration) => networkConfiguration.chainId),
       [TRAITS.NETWORKS_WITHOUT_TICKER]: Object.values(
         metamaskState.networkConfigurations,
-      ).reduce((networkConfigurations, currentNetwork) => {
-        if (!currentNetwork.ticker) {
-          networkConfigurations.push(currentNetwork.chainId);
-        }
-        return networkConfigurations;
-      }, []),
+      )
+        .filter(({ ticker }) => !ticker)
+        .map(({ chainId }) => chainId),
       [TRAITS.NFT_AUTODETECTION_ENABLED]: metamaskState.useNftDetection,
       [TRAITS.NUMBER_OF_ACCOUNTS]: Object.values(metamaskState.identities)
         .length,
