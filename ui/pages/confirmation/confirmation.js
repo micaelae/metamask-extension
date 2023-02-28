@@ -271,12 +271,10 @@ export default function ConfirmationPage({
             : null,
         ));
 
-    if (submitResult?.success) {
-      setLoading(false);
-    }
-
     if (submitResult?.error) {
       setSubmitAlerts(submitResult.error);
+    } else {
+      setLoading(false);
     }
   };
 
