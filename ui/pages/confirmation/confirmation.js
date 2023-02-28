@@ -265,7 +265,7 @@ export default function ConfirmationPage({
     const submitResult = await (templateState[pendingConfirmation.id]
       ?.useWarningModal
       ? setShowWarningModal(true)
-      : await templatedValues.onSubmit(
+      : templatedValues.onSubmit(
           hasInputState(pendingConfirmation.type)
             ? inputStates[MESSAGE_TYPE.SNAP_DIALOG_PROMPT]
             : null,
@@ -362,7 +362,6 @@ export default function ConfirmationPage({
               <Callout
                 key={alert.id}
                 severity={alert.severity}
-                dismiss={() => dismissAlert(alert.id)}
                 isFirst={idx === 0}
                 isLast={idx === filtered.length - 1}
                 isMultiple={filtered.length > 1}

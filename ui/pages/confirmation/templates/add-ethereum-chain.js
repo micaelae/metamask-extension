@@ -370,9 +370,13 @@ function getValues(pendingApproval, t, actions, history) {
         console.error(
           `Request for method 'eth_chainId on ${customRpcUrl} failed`,
         );
-        return {
-          error: [ERROR_CONNECTING_TO_RPC],
-        };
+
+        if (_err.message === 'Failed to fetch') {
+          return {
+            error: [ERROR_CONNECTING_TO_RPC],
+          };
+        }
+        throw _err;
       }
 
       if (pendingApproval.requestData.chainId !== endpointChainId) {

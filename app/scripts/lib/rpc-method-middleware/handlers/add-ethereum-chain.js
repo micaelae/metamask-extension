@@ -255,7 +255,7 @@ async function addEthereumChainHandler(
         ticker,
       },
     });
-    addCustomRpc(customRpc);
+    await addCustomRpc(customRpc);
     sendMetrics({
       event: 'Custom Network Added',
       category: EVENT.CATEGORIES.NETWORK,
