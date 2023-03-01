@@ -2,13 +2,13 @@ import { inspect, isDeepStrictEqual, promisify } from 'util';
 import { isMatch } from 'lodash';
 import nock from 'nock';
 import sinon from 'sinon';
-import * as ethJsonRpcMiddlewareModule from '@metamask/eth-json-rpc-middleware';
+import * as ethJsonRpcProvider from '@metamask/eth-json-rpc-provider';
 import NetworkController from './network-controller';
 
-jest.mock('@metamask/eth-json-rpc-middleware', () => {
+jest.mock('@metamask/eth-json-rpc-provider', () => {
   return {
     __esModule: true,
-    ...jest.requireActual('@metamask/eth-json-rpc-middleware'),
+    ...jest.requireActual('@metamask/eth-json-rpc-provider'),
   };
 });
 
@@ -1683,7 +1683,7 @@ describe('NetworkController', () => {
                   },
                 ];
                 jest
-                  .spyOn(ethJsonRpcMiddlewareModule, 'providerFromEngine')
+                  .spyOn(ethJsonRpcProvider, 'providerFromEngine')
                   .mockImplementationOnce(() => fakeProviders[0])
                   .mockImplementationOnce(() => fakeProviders[1]);
                 await withoutCallingLookupNetwork({
@@ -1799,7 +1799,7 @@ describe('NetworkController', () => {
                   },
                 ];
                 jest
-                  .spyOn(ethJsonRpcMiddlewareModule, 'providerFromEngine')
+                  .spyOn(ethJsonRpcProvider, 'providerFromEngine')
                   .mockImplementationOnce(() => fakeProviders[0])
                   .mockImplementationOnce(() => fakeProviders[1]);
                 await withoutCallingLookupNetwork({

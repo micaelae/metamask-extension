@@ -19,7 +19,7 @@ import {
   providerFromMiddleware,
   SafeEventEmitterProvider,
 } from '@metamask/eth-json-rpc-provider';
-import type { Block } from '@metamask/eth-json-rpc-middleware/dist/types';
+// import type { Block } from '@metamask/eth-json-rpc-middleware/dist/types';
 import createFilterMiddleware from 'eth-json-rpc-filters';
 import { createInfuraMiddleware } from '@metamask/eth-json-rpc-infura';
 import type { Hex } from '@metamask/utils';
@@ -27,7 +27,11 @@ import createSubscriptionManager from 'eth-json-rpc-filters/subscriptionManager'
 import { PollingBlockTracker } from 'eth-block-tracker';
 import type { InfuraJsonRpcSupportedNetwork } from '@metamask/eth-json-rpc-infura/dist/types';
 import { SECOND } from '../../../../shared/constants/time';
-import { BUILT_IN_NETWORKS } from '../../../../shared/constants/network';
+import {
+  BUILT_IN_NETWORKS,
+  NETWORK_TYPES,
+} from '../../../../shared/constants/network';
+// import nodeFetch from 'node-fetch';
 
 type RpcPayload<P> = {
   id: unknown;
@@ -50,12 +54,14 @@ function createNetworkAndChainIdMiddleware({
   network,
 }: {
   network: InfuraJsonRpcSupportedNetwork;
+  // network: NetworkType;
 }) {
-  if (!BUILT_IN_NETWORKS[network]) {
+  if (!NETWORK_TYPES[network as keyof typeof NETWORK_TYPES]) {
     throw new Error(`createInfuraClient - unknown network "${network}"`);
   }
 
-  const { chainId, networkId } = BUILT_IN_NETWORKS[network];
+  const { chainId, networkId } =
+    BUILT_IN_NETWORKS[network as keyof typeof BUILT_IN_NETWORKS];
 
   return createScaffoldMiddleware({
     eth_chainId: chainId,
@@ -141,9 +147,11 @@ type InfuraNetworkConfiguration = {
 export function createNetworkClient(
   networkConfig: CustomNetworkConfiguration | InfuraNetworkConfiguration,
 ): { provider: SafeEventEmitterProvider; blockTracker: PollingBlockTracker } {
-  const rpcApiMiddleware:
-    | JsonRpcMiddleware<unknown, unknown>
-    | JsonRpcMiddleware<string[], Block> =
+  /* eslint-disable @typescript-eslint/no-require-imports,@typescript-eslint/no-shadow */
+  const fetch = global.fetch || require('node-fetch')
+  const btoa = global.btoa || require('btoa');
+
+  const rpcApiMiddleware: JsonRpcMiddleware<unknown, unknown> =
     networkConfig.type === NetworkClientType.INFURA
       ? createInfuraMiddleware({
           network: networkConfig.network,
@@ -151,7 +159,7 @@ export function createNetworkClient(
           maxAttempts: 5,
           source: 'metamask',
         })
-      : createFetchMiddleware({ rpcUrl: networkConfig.rpcUrl });
+      : createFetchMiddleware({ btoa, fetch, rpcUrl: networkConfig.rpcUrl });
 
   const rpcProvider = providerFromMiddleware(rpcApiMiddleware);
 
