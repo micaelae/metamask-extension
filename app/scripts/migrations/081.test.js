@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import { migrate, version } from './081.ts';
+import { migrate, version } from './081';
 
 jest.mock('uuid', () => {
   const actual = jest.requireActual('uuid');
