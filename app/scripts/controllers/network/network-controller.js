@@ -254,7 +254,7 @@ export default class NetworkController extends EventEmitter {
 
     this._setProviderConfig({
       type: NETWORK_TYPES.RPC,
-      networkConfigurationId,
+        networkConfigurationId,
       ...targetNetwork,
     });
 
@@ -504,7 +504,7 @@ export default class NetworkController extends EventEmitter {
    * Adds a network configuration if the rpcUrl is not already present on an
    * existing network configuration. Otherwise updates the entry with the matching rpcUrl.
    *
-   * @param {NetworkConfiguration} - - The network configuration to add or, if rpcUrl matches an existing entry, to modify.
+   * @param {NetworkConfiguration} - The network configuration to add or, if rpcUrl matches an existing entry, to modify.
    * @returns {string} networkConfigurationId for the added or updated network configuration
    */
   upsertNetworkConfiguration({ rpcUrl, chainId, ticker, chainName, rpcPrefs }) {
@@ -517,26 +517,17 @@ export default class NetworkController extends EventEmitter {
       rpcPrefs,
     };
 
-    for (const [networkConfigurationId, networkConfiguration] of Object.entries(
-      networkConfigurations,
-    )) {
-      if (
-        networkConfiguration.rpcUrl?.toLowerCase() === rpcUrl?.toLowerCase()
-      ) {
-        this.networkConfigurationsStore.updateState({
-          ...networkConfigurations,
-          [networkConfigurationId]: newNetworkConfiguration,
-        });
-        return networkConfigurationId;
-      }
-    }
+    const oldNetworkConfigurationId = Object.values(networkConfigurations).find(
+      (networkConfiguration) =>
+        networkConfiguration.rpcUrl?.toLowerCase() === rpcUrl?.toLowerCase(),
+    )?.id;
 
-    const newNetworkConfigurationId = random();
+    const newNetworkConfigurationId = oldNetworkConfigurationId || random();
     this.networkConfigurationsStore.updateState({
       ...networkConfigurations,
       [newNetworkConfigurationId]: {
         ...newNetworkConfiguration,
-        networkConfigurationId: newNetworkConfigurationId,
+        id: newNetworkConfigurationId,
       },
     });
 

@@ -2481,6 +2481,7 @@ describe('NetworkController', () => {
                 },
                 type: 'rpc',
               },
+              id: 'testNetworkConfigurationId',
             },
           },
         },
@@ -5131,7 +5132,6 @@ describe('NetworkController', () => {
             rpcPrefs: undefined,
             rpcUrl: 'rpc_url',
             ticker: 'RPC',
-            networkConfigurationId: 'network-configuration-id-1',
           };
 
           expect(
@@ -5142,7 +5142,11 @@ describe('NetworkController', () => {
 
           expect(
             Object.values(controller.store.getState().networkConfigurations),
-          ).toStrictEqual(expect.arrayContaining([rpcUrlNetwork]));
+          ).toStrictEqual(
+            expect.arrayContaining([
+              { ...rpcUrlNetwork, id: 'network-configuration-id-1' },
+            ]),
+          );
         },
       );
     });
@@ -5158,6 +5162,7 @@ describe('NetworkController', () => {
                 chainName: 'old_rpc_chainName',
                 rpcPrefs: { blockExplorerUrl: 'testchainscan.io' },
                 chainId: '1',
+                id: 'networkConfigurationId',
               },
             },
           },
