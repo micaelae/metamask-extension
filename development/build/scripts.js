@@ -1102,6 +1102,7 @@ async function getEnvironmentVariables({ buildTarget, buildType, version }) {
   return {
     ICON_NAMES: iconNames,
     NFTS_V1: config.NFTS_V1 === '1',
+    MULTICHAIN: config.MULTICHAIN === '1',
     CONF: devMode ? config : {},
     IN_TEST: testing,
     INFURA_PROJECT_ID: getInfuraProjectId({
