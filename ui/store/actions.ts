@@ -4608,16 +4608,10 @@ export function requestAddNetworkApproval(
 ): ThunkAction<void, MetaMaskReduxState, unknown, AnyAction> {
   return async (dispatch) => {
     try {
-      const networkConfigurationId: string = await submitRequestToBackground(
-        'requestAddNetworkApproval',
-        [customRpc, originIsMetaMask],
-      );
-      dispatch(
-        setNewNetworkAdded({
-          networkConfigurationId,
-          chainName: customRpc.chainName,
-        }),
-      );
+      await submitRequestToBackground('requestAddNetworkApproval', [
+        customRpc,
+        originIsMetaMask,
+      ]);
     } catch (error) {
       logErrorWithMessage(error);
       dispatch(displayWarning('Had a problem changing networks!'));
