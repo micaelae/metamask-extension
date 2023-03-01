@@ -6,11 +6,13 @@ import createRPCMethodTrackingMiddleware from './createRPCMethodTrackingMiddlewa
 const trackEvent = jest.fn();
 const metricsState = { participateInMetaMetrics: null };
 const getMetricsState = () => metricsState;
+const securityProviderRequest = jest.fn();
 
 const handler = createRPCMethodTrackingMiddleware({
   trackEvent,
   getMetricsState,
   rateLimitSeconds: 1,
+  securityProviderRequest,
 });
 
 function getNext(timeout = 500) {
