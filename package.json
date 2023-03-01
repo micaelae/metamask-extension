@@ -361,7 +361,6 @@
     "@babel/eslint-parser": "^7.13.14",
     "@babel/eslint-plugin": "^7.12.1",
     "@babel/preset-env": "^7.5.5",
-    "@babel/preset-flow": "^7.18.6",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.16.7",
     "@babel/register": "^7.5.5",
