@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-import migration81 from './081';
+import { migrate, version } from './081.ts';
 
 jest.mock('uuid', () => {
   const actual = jest.requireActual('uuid');
@@ -26,11 +26,12 @@ describe('migration #81', () => {
       meta: {
         version: 80,
       },
+      data: {},
     };
 
-    const newStorage = await migration81.migrate(oldStorage);
+    const newStorage = await migrate(oldStorage);
     expect(newStorage.meta).toStrictEqual({
-      version: 81,
+      version,
     });
   });
   it('should migrate the network configurations from an array on the PreferencesController to an object on the NetworkController and change property `nickname` to `chainName`', async () => {
@@ -83,10 +84,10 @@ describe('migration #81', () => {
         NetworkController: {},
       },
     };
-    const newStorage = await migration81.migrate(oldStorage);
+    const newStorage = await migrate(oldStorage);
     expect(newStorage).toStrictEqual({
       meta: {
-        version: 81,
+        version,
       },
       data: {
         PreferencesController: {},
@@ -215,10 +216,10 @@ describe('migration #81', () => {
         },
       },
     };
-    const newStorage = await migration81.migrate(oldStorage);
+    const newStorage = await migrate(oldStorage);
     expect(newStorage).toStrictEqual({
       meta: {
-        version: 81,
+        version,
       },
       data: {
         PreferencesController: {
@@ -376,10 +377,10 @@ describe('migration #81', () => {
         },
       },
     };
-    const newStorage = await migration81.migrate(oldStorage);
+    const newStorage = await migrate(oldStorage);
     expect(newStorage).toStrictEqual({
       meta: {
-        version: 81,
+        version,
       },
       data: {
         PreferencesController: {
@@ -457,7 +458,7 @@ describe('migration #81', () => {
       },
     });
   });
-  it('should add a networkConfigurations property set to an empty object to NetworkController if PreferencesController is undefined', async () => {
+  it('should change nothing if PreferencesController is undefined', async () => {
     const oldStorage = {
       meta: {
         version: 80,
@@ -490,10 +491,10 @@ describe('migration #81', () => {
         },
       },
     };
-    const newStorage = await migration81.migrate(oldStorage);
+    const newStorage = await migrate(oldStorage);
     expect(newStorage).toStrictEqual({
       meta: {
-        version: 81,
+        version,
       },
       data: {
         NetworkController: {
@@ -520,7 +521,6 @@ describe('migration #81', () => {
             ticker: 'ETH',
             type: 'mainnet',
           },
-          networkConfigurations: {},
         },
       },
     });
