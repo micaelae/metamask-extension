@@ -366,17 +366,17 @@ function getValues(pendingApproval, t, actions, history) {
       let endpointChainId;
       try {
         endpointChainId = await jsonRpcRequest(customRpcUrl, 'eth_chainId');
-      } catch (_err) {
+      } catch (err) {
         console.error(
           `Request for method 'eth_chainId on ${customRpcUrl} failed`,
         );
 
-        if (_err.message === 'Failed to fetch') {
+        if (err.message === 'Failed to fetch') {
           return {
             error: [ERROR_CONNECTING_TO_RPC],
           };
         }
-        throw _err;
+        throw err;
       }
 
       if (pendingApproval.requestData.chainId !== endpointChainId) {
