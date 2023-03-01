@@ -275,15 +275,11 @@ export default class TypedMessageManager extends EventEmitter {
     const msg = this.getMsg(msgParams.metamaskId);
 
     this.metricsEvent({
-      event: 'Sign Request Approve',
+      event: 'Sign Request',
       category: EVENT.CATEGORIES.TRANSACTIONS,
       properties: {
-        action: 'Sign Request Approve',
+        action: 'Sign Request',
         type: msg.type,
-        ui_customizations:
-          msg.securityProviderResponse?.flagAsDangerous === 1
-            ? ['flagged_as_malicious']
-            : [],
       },
     });
 
@@ -339,13 +335,9 @@ export default class TypedMessageManager extends EventEmitter {
         event: reason,
         category: EVENT.CATEGORIES.TRANSACTIONS,
         properties: {
-          action: 'Sign Request Reject',
+          action: 'Sign Request',
           version: msg.msgParams.version,
           type: msg.type,
-          ui_customizations:
-            msg.securityProviderResponse?.flagAsDangerous === 1
-              ? ['flagged_as_malicious']
-              : [],
         },
       });
     }
