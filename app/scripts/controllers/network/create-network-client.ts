@@ -13,19 +13,21 @@ import {
   createInflightCacheMiddleware,
   createFetchMiddleware,
   createRetryOnEmptyMiddleware,
+} from '@metamask/eth-json-rpc-middleware';
+import {
   providerFromEngine,
   providerFromMiddleware,
   SafeEventEmitterProvider,
-} from '@metamask/eth-json-rpc-middleware';
+} from '@metamask/eth-json-rpc-provider';
 import type { Block } from '@metamask/eth-json-rpc-middleware/dist/types';
 import createFilterMiddleware from 'eth-json-rpc-filters';
 import { createInfuraMiddleware } from '@metamask/eth-json-rpc-infura';
 import type { Hex } from '@metamask/utils';
 import createSubscriptionManager from 'eth-json-rpc-filters/subscriptionManager';
 import { PollingBlockTracker } from 'eth-block-tracker';
+import type { InfuraJsonRpcSupportedNetwork } from '@metamask/eth-json-rpc-infura/dist/types';
 import { SECOND } from '../../../../shared/constants/time';
 import { BUILT_IN_NETWORKS } from '../../../../shared/constants/network';
-import type { InfuraJsonRpcSupportedNetwork } from '@metamask/eth-json-rpc-infura/dist/types';
 
 type RpcPayload<P> = {
   id: unknown;
