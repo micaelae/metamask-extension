@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Box from '../../ui/box';
+import Box, { BoxProps } from '../../ui/box';
 
 export enum BadgeWrapperPosition {
   topRight = 'top-right',
@@ -27,7 +27,7 @@ export interface BadgeWrapperProps
   /**
    * The BadgeWrapper props of the component. All Box props can be used
    */
-  badgeContainerProps?: PropTypes.InferProps<typeof Box.propTypes>;
+  badgeContainerProps?: BoxProps;
   /**
    * The position of the Badge. Possible values could be 'BadgeWrapperPosition.topRight', 'BadgeWrapperPosition.bottomRight','BadgeWrapperPosition.topLeft', 'BadgeWrapperPosition.bottomLeft'
    * Defaults to 'BadgeWrapperPosition.topRight'

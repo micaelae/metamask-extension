@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import { DISPLAY } from '../../../helpers/constants/design-system';
 
-import Box from '../../ui/box/box';
+import Box from '../../ui/box';
 
 import {
   BadgeWrapperPosition,
@@ -18,7 +18,8 @@ export const BadgeWrapper = ({
   position = BadgeWrapperPosition.topRight,
   positionObj,
   anchorElementShape = BadgeWrapperAnchorElementShape.circular,
-  className,
+  className = '',
+  color,
   ...props
 }: BadgeWrapperProps) => (
   <Box
@@ -33,7 +34,7 @@ export const BadgeWrapper = ({
         [`mm-badge-wrapper__badge-container--${anchorElementShape}-${position}`]:
           !positionObj,
       })}
-      style={{ ...positionObj, ...props?.style }}
+      style={{ ...positionObj }}
       {...badgeContainerProps}
     >
       {/* Generally the AvatarNetwork at SIZES.XS */}
