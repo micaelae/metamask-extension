@@ -18,6 +18,8 @@ import {
   TEXT_ALIGN,
   TextColor,
   TypographyVariant,
+  TextVariant,
+  BorderRadius,
 } from '../../helpers/constants/design-system';
 import { I18nContext } from '../../contexts/i18n';
 import ContractTokenValues from '../../components/ui/contract-token-values/contract-token-values';
@@ -42,7 +44,6 @@ import {
   cancelTxs,
   showModal,
   updateAndApproveTx,
-  updateCustomNonce,
 } from '../../store/actions';
 import { clearConfirmTransaction } from '../../ducks/confirm-transaction/confirm-transaction.duck';
 import { getMostRecentOverviewPage } from '../../ducks/history/history';
@@ -61,7 +62,8 @@ import {
 import { ConfirmPageContainerNavigation } from '../../components/app/confirm-page-container';
 import { useSimulationFailureWarning } from '../../hooks/useSimulationFailureWarning';
 import SimulationErrorMessage from '../../components/ui/simulation-error-message';
-import { Icon, ICON_NAMES } from '../../components/component-library';
+import { Icon, ICON_NAMES, Text } from '../../components/component-library';
+import { ConfirmPageContainerWarning } from '../../components/app/confirm-page-container/confirm-page-container-content';
 
 export default function TokenAllowance({
   origin,
@@ -86,6 +88,12 @@ export default function TokenAllowance({
   currentTokenBalance,
   toAddress,
   tokenSymbol,
+  customNonceValue,
+  updateCustomNonce,
+  getNextNonce,
+  nextNonce,
+  showCustomizeNonceModal,
+  warning,
 }) {
   const t = useContext(I18nContext);
   const dispatch = useDispatch();
@@ -162,7 +170,6 @@ export default function TokenAllowance({
   const networkName =
     NETWORK_TO_NAME_MAP[fullTxData.chainId] || networkIdentifier;
 
-  const customNonceValue = '';
   const customNonceMerge = (transactionData) =>
     customNonceValue
       ? {
@@ -172,7 +179,7 @@ export default function TokenAllowance({
       : transactionData;
 
   const handleReject = () => {
-    dispatch(updateCustomNonce(''));
+    updateCustomNonce('');
     dispatch(setCustomTokenAmount(''));
 
     dispatch(cancelTx(fullTxData)).then(() => {
@@ -208,7 +215,7 @@ export default function TokenAllowance({
       fullTxData.currentTokenBalance = currentTokenBalance;
     }
 
-    dispatch(updateCustomNonce(''));
+    updateCustomNonce('');
 
     dispatch(updateAndApproveTx(customNonceMerge(fullTxData))).then(() => {
       dispatch(clearConfirmTransaction());
@@ -297,6 +304,11 @@ export default function TokenAllowance({
         accountAddress={userAddress}
         chainId={fullTxData.chainId}
       />
+      {warning && (
+        <Box className="token-allowance-container__custom-nonce-warning">
+          <ConfirmPageContainerWarning warning={warning} />
+        </Box>
+      )}
       <Box
         display={DISPLAY.FLEX}
         flexDirection={FLEX_DIRECTION.ROW}
@@ -440,6 +452,57 @@ export default function TokenAllowance({
             currentCurrency={currentCurrency}
             useCurrencyRateCheck={useCurrencyRateCheck}
           />
+        </Box>
+      )}
+      {useNonceField && (
+        <Box
+          display={DISPLAY.FLEX}
+          marginTop={4}
+          marginRight={4}
+          marginBottom={4}
+          marginLeft={4}
+          paddingTop={3}
+          paddingRight={3}
+          paddingBottom={4}
+          paddingLeft={3}
+          borderRadius={BorderRadius.MD}
+          alignItems={AlignItems.center}
+          className="token-allowance-container__custom-nonce-content"
+        >
+          <Box
+            className="token-allowance-container__custom-nonce-header"
+            justifyContent={JustifyContent.flexStart}
+            alignItems={AlignItems.center}
+          >
+            <Text
+              variant={TextVariant.bodySm}
+              fontWeight={FONT_WEIGHT.NORMAL}
+              as="h6"
+            >
+              {t('nonce')}
+            </Text>
+            <Button
+              type="link"
+              className="token-allowance-container__custom-nonce-edit"
+              onClick={() =>
+                showCustomizeNonceModal({
+                  nextNonce,
+                  customNonceValue,
+                  updateCustomNonce,
+                  getNextNonce,
+                })
+              }
+            >
+              {t('edit')}
+            </Button>
+          </Box>
+          <Text
+            className="confirm-approve-content__custom-nonce-value"
+            variant={TextVariant.bodySmBold}
+            as="h6"
+          >
+            {customNonceValue || nextNonce}
+          </Text>
         </Box>
       )}
       <Box
@@ -613,4 +676,28 @@ TokenAllowance.propTypes = {
    * Symbol of the token that is waiting to be allowed
    */
   tokenSymbol: PropTypes.string,
+  /**
+   * Custom nonce value
+   */
+  customNonceValue: PropTypes.string,
+  /**
+   * Function that is supposed to update custom nonce
+   */
+  updateCustomNonce: PropTypes.func,
+  /**
+   * Function that is supposed to get the next nonce to use
+   */
+  getNextNonce: PropTypes.func,
+  /**
+   * Getting the next suggested nonce
+   */
+  nextNonce: PropTypes.number,
+  /**
+   * Function that is supposed to open the customized nonce modal
+   */
+  showCustomizeNonceModal: PropTypes.func,
+  /**
+   * Customize nonce warning message
+   */
+  warning: PropTypes.string,
 };
