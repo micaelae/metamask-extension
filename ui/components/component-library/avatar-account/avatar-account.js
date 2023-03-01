@@ -17,7 +17,7 @@ export const AvatarAccount = ({
   size = Size.MD,
   address,
   className,
-  type,
+  type = 'Jazzicon',
   ...props
 }) => {
   return (
