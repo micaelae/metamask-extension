@@ -26,15 +26,15 @@ import {
 import getFetchWithTimeout from '../../../../shared/modules/fetch-with-timeout';
 import createInfuraClient from './createInfuraClient';
 import createJsonRpcClient from './createJsonRpcClient';
+import { isPrefixedFormattedHexString, isSafeChainId } from '../../../../shared/modules/network.utils';
 
 /**
  * @typedef {object} NetworkConfiguration
  * @property {string} rpcUrl - RPC target URL.
  * @property {string} chainId - Network ID as per EIP-155
- * @property {string} chainName - Personalized network name.
  * @property {string} ticker - Currency ticker.
  * @property {object} rpcPrefs - Personalized preferences.
- * @property {string} [networkConfigurationId] - the unique identifier for this networkConfiguration.
+ * @property {string} [chainName] - Personalized network name.
  */
 
 const env = process.env.METAMASK_ENV;
@@ -508,6 +508,14 @@ export default class NetworkController extends EventEmitter {
    * @returns {string} networkConfigurationId for the added or updated network configuration
    */
   upsertNetworkConfiguration({ rpcUrl, chainId, ticker, chainName, rpcPrefs }) {
+    assert.ok(
+      isPrefixedFormattedHexString(chainId),
+      `Invalid chain ID "${chainId}": invalid hex string.`,
+    );
+    assert.ok(
+      isSafeChainId(parseInt(chainId, 16)),
+      `Invalid chain ID "${chainId}": numerical value greater than max safe value.`)
+
     const networkConfigurations = this.networkConfigurationsStore.getState();
     const newNetworkConfiguration = {
       rpcUrl,
