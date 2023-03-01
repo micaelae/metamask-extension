@@ -372,9 +372,7 @@ function getValues(pendingApproval, t, actions, history) {
         );
 
         if (err.message === 'Failed to fetch') {
-          return {
-            error: [ERROR_CONNECTING_TO_RPC],
-          };
+          return [ERROR_CONNECTING_TO_RPC];
         }
         throw err;
       }
@@ -383,9 +381,7 @@ function getValues(pendingApproval, t, actions, history) {
         console.error(
           `Chain ID returned by RPC URL ${customRpcUrl} does not match ${endpointChainId}`,
         );
-        return {
-          error: [MISMATCHED_NETWORK_RPC_CHAIN_ID],
-        };
+        return [MISMATCHED_NETWORK_RPC_CHAIN_ID];
       }
 
       await actions.resolvePendingApproval(
@@ -396,9 +392,7 @@ function getValues(pendingApproval, t, actions, history) {
         actions.addCustomNetwork(pendingApproval.requestData);
         history.push(DEFAULT_ROUTE);
       }
-      return {
-        success: true,
-      };
+      return [];
     },
     onCancel: () =>
       actions.rejectPendingApproval(

@@ -262,23 +262,27 @@ export default function ConfirmationPage({
     return INPUT_STATE_CONFIRMATIONS.includes(type);
   };
 
+  const handleSubmitResult = (submitResult) => {
+    if (submitResult?.length > 0) {
+      setLoadingText(templatedValues.submitText);
+      setSubmitAlerts(submitResult);
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  };
   const handleSubmit = async () => {
     setLoading(true);
+    // submit result is an array of errors or empty on success
     const submitResult = await (templateState[pendingConfirmation.id]
       ?.useWarningModal
       ? setShowWarningModal(true)
-      : templatedValues.onSubmit(
+      : await templatedValues.onSubmit(
           hasInputState(pendingConfirmation.type)
             ? inputStates[MESSAGE_TYPE.SNAP_DIALOG_PROMPT]
             : null,
         ));
-
-    if (submitResult?.error) {
-      setLoadingText(templatedValues.submitText);
-      setSubmitAlerts(submitResult.error);
-    } else {
-      setLoading(false);
-    }
+    handleSubmitResult(submitResult);
   };
 
   return (
@@ -346,7 +350,8 @@ export default function ConfirmationPage({
         {showWarningModal && (
           <ConfirmationWarningModal
             onSubmit={async () => {
-              await templatedValues.onSubmit();
+              const res = await templatedValues.onSubmit();
+              await handleSubmitResult(res);
               setShowWarningModal(false);
             }}
             onCancel={templatedValues.onCancel}
