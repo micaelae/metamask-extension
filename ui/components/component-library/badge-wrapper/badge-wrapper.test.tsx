@@ -6,7 +6,7 @@ import { BadgeWrapper } from './badge-wrapper';
 import {
   BadgeWrapperPosition,
   BadgeWrapperAnchorElementShape,
-} from './badge-wrapper.constants';
+} from './badge-wrapper.types';
 
 describe('BadgeWrapper', () => {
   it('should render correctly', () => {

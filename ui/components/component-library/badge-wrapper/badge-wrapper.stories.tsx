@@ -1,4 +1,15 @@
 import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+
+import {
+  AlignItems,
+  BorderColor,
+  BorderRadius,
+  Color,
+  DISPLAY,
+  IconColor,
+  Size,
+} from '../../../helpers/constants/design-system';
 
 import Box from '../../ui/box/box';
 
@@ -10,20 +21,10 @@ import {
   ICON_NAMES,
   Tag,
 } from '..';
-
-import {
-  AlignItems,
-  BorderColor,
-  BorderRadius,
-  Color,
-  DISPLAY,
-  IconColor,
-  Size,
-} from '../../../helpers/constants/design-system';
 import {
   BadgeWrapperAnchorElementShape,
   BadgeWrapperPosition,
-} from './badge-wrapper.constants';
+} from './badge-wrapper.types';
 
 import README from './README.mdx';
 
@@ -31,7 +32,6 @@ import { BadgeWrapper } from './badge-wrapper';
 
 export default {
   title: 'Components/ComponentLibrary/BadgeWrapper',
-
   component: BadgeWrapper,
   parameters: {
     docs: {
@@ -60,9 +60,9 @@ export default {
       control: 'text',
     },
   },
-};
+} as ComponentMeta<typeof BadgeWrapper>;
 
-export const DefaultStory = (args) => (
+const Template: ComponentStory<typeof BadgeWrapper> = (args) => (
   <BadgeWrapper
     badge={
       <AvatarNetwork
@@ -81,6 +81,8 @@ export const DefaultStory = (args) => (
     )}
   </BadgeWrapper>
 );
+
+export const DefaultStory = Template.bind({});
 
 DefaultStory.storyName = 'Default';
 

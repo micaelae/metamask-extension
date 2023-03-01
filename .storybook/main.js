@@ -12,6 +12,7 @@ module.exports = {
   features: { buildStoriesJson: true },
   stories: [
     '../ui/**/*.stories.js',
+    '../ui/**/*.stories.tsx',
     '../ui/**/*.stories.mdx',
     './*.stories.mdx',
   ],
@@ -99,5 +100,15 @@ module.exports = {
       }),
     );
     return config;
+  },
+  typescript: {
+    check: false,
+    checkOptions: {},
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: (prop) =>
+        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+    },
   },
 };
