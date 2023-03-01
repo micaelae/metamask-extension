@@ -5,4 +5,3 @@ export {
   ValidBackgroundColor,
   ValidBorderColors,
 } from './box';
-export { BoxProps } from './box.d';

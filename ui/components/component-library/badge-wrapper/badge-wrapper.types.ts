@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import Box, { BoxProps } from '../../ui/box';
+import Box from '../../ui/box';
+import type { BoxProps } from '../../ui/box/box.d';
 
 export enum BadgeWrapperPosition {
   topRight = 'top-right',

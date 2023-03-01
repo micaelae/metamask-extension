@@ -66,7 +66,7 @@ export type BoxHeightArray = [
   BoxHeight[keyof BoxHeight]?,
 ];
 
-type SizeNumber =
+export type SizeNumber =
   | 0
   | 1
   | 2
@@ -83,7 +83,9 @@ type SizeNumber =
   | null
   | undefined;
 
-type Size = SizeNumber | [SizeNumber, SizeNumber?, SizeNumber?, SizeNumber?];
+export type Size =
+  | SizeNumber
+  | [SizeNumber, SizeNumber?, SizeNumber?, SizeNumber?];
 
 export interface BoxProps {
   children?: React.ReactNode;
