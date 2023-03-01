@@ -808,17 +808,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-flow@npm:^7.12.1":
-  version: 7.12.1
-  resolution: "@babel/plugin-syntax-flow@npm:7.12.1"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.10.4
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 9c57968346838966ac7ba15bb282ba62e8d81a5e065d2b627ab4069e47205435cf33e54e241317986621128954d0fbe32f19f605e66d89630f29b615c7af951e
-  languageName: node
-  linkType: hard
-
 "@babel/plugin-syntax-flow@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/plugin-syntax-flow@npm:7.18.6"
@@ -1103,18 +1092,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 7f70222f6829c82a36005508d34ddbe6fd0974ae190683a8670dd6ff08669aaf51fef2209d7403f9bd543cb2d12b18458016c99a6ed0332ccedb3ea127b01229
-  languageName: node
-  linkType: hard
-
-"@babel/plugin-transform-flow-strip-types@npm:^7.12.1":
-  version: 7.12.1
-  resolution: "@babel/plugin-transform-flow-strip-types@npm:7.12.1"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.10.4
-    "@babel/plugin-syntax-flow": ^7.12.1
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 5b6929ae7fb7d516cabbc6d10cc8cf6a25c11a04d6d6a872cad19505e6a36693f1b072e9cf5d3475113e4c8400cad5a164127d98cbfae562c32cf0c89212424a
   languageName: node
   linkType: hard
 
@@ -1549,19 +1526,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-flow@npm:^7.12.1":
-  version: 7.12.1
-  resolution: "@babel/preset-flow@npm:7.12.1"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.10.4
-    "@babel/plugin-transform-flow-strip-types": ^7.12.1
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 0edb0a8eaa59f2bd07249e0e420d6861e9429ecfef77014aa54a0c118802968d8d71bc0d97ba7bbf0f105cebf126cedafd4b15a2a1cff7cb44bfc1966f344288
-  languageName: node
-  linkType: hard
-
-"@babel/preset-flow@npm:^7.18.6":
+"@babel/preset-flow@npm:^7.12.1, @babel/preset-flow@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/preset-flow@npm:7.18.6"
   dependencies:
