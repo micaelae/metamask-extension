@@ -2,5 +2,6 @@ export { BadgeWrapper } from './badge-wrapper';
 export {
   BadgeWrapperPosition,
   BadgeWrapperAnchorElementShape,
-  BadgeWrapperProps,
 } from './badge-wrapper.types';
+
+export type { BadgeWrapperProps } from './badge-wrapper.types';
